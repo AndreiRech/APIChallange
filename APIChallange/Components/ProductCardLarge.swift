@@ -55,8 +55,9 @@ struct ProductCardLarge: View {
                     Text("US$ \(product.price.description)")
                         .font(.headline)
                 }
+                .frame(maxHeight: .infinity)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 24)
-                .padding(.bottom, 32)
             }
         }
         .padding(8)
