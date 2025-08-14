@@ -47,12 +47,11 @@ struct ProductCard: View {
                     .font(.subheadline)
                     .lineLimit(2)
                 
-                Text(product.price.description)
+                Text("US$ \(product.price.description)")
                     .font(.headline)
             }
         }
         .padding(8)
-        .frame(width: 177, height: 250)
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(Color(.secondarySystemBackground))
