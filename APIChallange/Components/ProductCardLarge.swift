@@ -15,8 +15,13 @@ struct ProductCardLarge: View {
         HStack(spacing: 16) {
             AsyncImage(url: URL(string: product.thumbnail)) { image in
                 image.resizable()
+                    .scaledToFit()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundStyle(Color(.tertiarySystemFill))
+                    )
             } placeholder: {
-
+                DefaultImage(imageName: "bag.fill", large: true)
             }
    
             VStack {

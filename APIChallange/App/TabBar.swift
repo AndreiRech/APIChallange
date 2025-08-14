@@ -12,7 +12,7 @@ struct TabBar: View {
         TabView {
             Tab("Home", systemImage: "house.fill") {
                 NavigationStack {
-                    ContentView(viewmodel: ProductViewModel(service: ProductService()))
+                    Home(viewmodel: ProductViewModel(service: ProductService()))
                 }
             }
             
@@ -24,19 +24,19 @@ struct TabBar: View {
             
             Tab("Cart", systemImage: "cart.fill") {
                 NavigationStack {
-                    ContentView(viewmodel: ProductViewModel(service: ProductService()))
+                    Home(viewmodel: ProductViewModel(service: ProductService()))
                 }
             }
             
             Tab("Favorites", systemImage: "heart.fill") {
                 NavigationStack {
-                    ContentView(viewmodel: ProductViewModel(service: ProductService()))
+                    Home(viewmodel: ProductViewModel(service: ProductService()))
                 }
             }
             
             Tab("Orders", systemImage: "bag.fill") {
                 NavigationStack {
-                    ContentView(viewmodel: ProductViewModel(service: ProductService()))
+                    Home(viewmodel: ProductViewModel(service: ProductService()))
                 }
             }
         }

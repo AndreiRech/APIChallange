@@ -52,6 +52,7 @@ struct ProductCard: View {
             }
         }
         .padding(8)
+        .frame(height: 250)
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(Color(.secondarySystemBackground))
