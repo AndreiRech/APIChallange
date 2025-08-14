@@ -15,6 +15,12 @@ struct ProductCard: View {
         VStack(spacing: 8) {
             AsyncImage(url: URL(string: product.thumbnail)) { image in
                 image.resizable()
+                image.scaledToFit()
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .foregroundStyle(Color(.tertiarySystemFill))
+                )
+                
             } placeholder: {
                 Image(.placeholder)
             }
@@ -42,12 +48,11 @@ struct ProductCard: View {
                     .font(.subheadline)
                     .lineLimit(2)
                 
-                Text(product.price.description)
+                Text("US$ \(product.price.description)")
                     .font(.headline)
             }
         }
         .padding(8)
-        .frame(width: 177, height: 250)
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(Color(.secondarySystemBackground))
