@@ -9,11 +9,15 @@ import SwiftUI
 
 struct ProductCard: View {
     @State var isFavorite: Bool = false
+    var product: Product
     
     var body: some View {
         VStack(spacing: 8) {
-            Image(.placeholder)
-                .resizable()
+            AsyncImage(url: URL(string: product.thumbnail)) { image in
+                image.resizable()
+            } placeholder: {
+                Image(.placeholder)
+            }
                 .frame(width: 160, height: 160)
                 .overlay(
                     Button {
@@ -34,11 +38,11 @@ struct ProductCard: View {
                 .cornerRadius(8)
             
             VStack(alignment: .leading, spacing: 4) {
-                Text("Product name with two or more lines goes here")
+                Text(product.title)
                     .font(.subheadline)
                     .lineLimit(2)
                 
-                Text("US$ 00,00")
+                Text(product.price.description)
                     .font(.headline)
             }
         }
@@ -51,6 +55,6 @@ struct ProductCard: View {
     }
 }
 
-#Preview {
-    ProductCard()
-}
+//#Preview {
+//    ProductCard()
+//}

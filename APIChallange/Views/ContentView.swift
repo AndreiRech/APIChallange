@@ -8,17 +8,34 @@
 import SwiftUI
 
 struct ContentView: View {
+    let viewmodel: ProductViewModel
+    let columns = [GridItem(.flexible()), GridItem(.flexible())]
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            if viewmodel.isLoading {
+                ProgressView()
+            } else {
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 16) {
+                        ForEach(viewmodel.products) { product in
+                            ProductCard(product: product)
+                        }
+                        .navigationBarTitle("Products")
+                        .refreshable {
+                            await viewmodel.getProducts()
+                        }
+                    }
+                }
+                .scrollIndicators(.hidden)
+            }
         }
-        .padding()
+        .task {
+            await viewmodel.getProducts()
+        }
     }
 }
 
-#Preview {
-    ContentView()
-}
+//#Preview {
+//    ContentView()
+//}
