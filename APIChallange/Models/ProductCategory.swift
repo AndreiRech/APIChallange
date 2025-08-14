@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ProductCategory: String, Codable, Identifiable {
+enum ProductCategory: String, Codable, Identifiable, CaseIterable {
     var id: String { rawValue }
     
     case beauty = "Beauty"
