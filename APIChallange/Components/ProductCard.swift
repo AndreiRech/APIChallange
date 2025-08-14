@@ -15,33 +15,32 @@ struct ProductCard: View {
         VStack(spacing: 8) {
             AsyncImage(url: URL(string: product.thumbnail)) { image in
                 image.resizable()
-                image.scaledToFit()
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .foregroundStyle(Color(.tertiarySystemFill))
-                )
-                
+                    .scaledToFit()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundStyle(Color(.tertiarySystemFill))
+                    )
             } placeholder: {
-                Image(.placeholder)
+                DefaultImage(imageName: "bag.fill")
             }
-                .frame(width: 160, height: 160)
-                .overlay(
-                    Button {
-                        isFavorite.toggle()
-                    } label: {
-                        Image(systemName: isFavorite ? "heart.fill" : "heart")
-                            .resizable()
-                            .foregroundStyle(Color(.label))
-                    }
-                        .padding(8)
-                        .frame(width: 38, height: 38)
-                        .background(
-                            RoundedRectangle(cornerRadius: 8)
-                                .foregroundStyle(Color(.tertiarySystemFill))
-                        )
-                    , alignment: .topTrailing
-                )
-                .cornerRadius(8)
+            .frame(width: 160, height: 160)
+            .overlay(
+                Button {
+                    isFavorite.toggle()
+                } label: {
+                    Image(systemName: isFavorite ? "heart.fill" : "heart")
+                        .resizable()
+                        .foregroundStyle(Color(.label))
+                }
+                    .padding(8)
+                    .frame(width: 38, height: 38)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundStyle(Color(.tertiarySystemFill))
+                    )
+                , alignment: .topTrailing
+            )
+            .cornerRadius(8)
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(product.title)

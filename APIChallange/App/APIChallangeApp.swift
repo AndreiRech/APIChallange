@@ -12,7 +12,7 @@ import SwiftData
 struct APIChallangeApp: App {
     var body: some Scene {
         WindowGroup {
-            Home(viewmodel: ProductViewModel(service: ProductService()))
+            TabBar()
         }
         .modelContainer(for: [Cart.self, Order.self])
     }
