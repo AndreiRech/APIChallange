@@ -10,13 +10,14 @@ import SwiftUI
 struct Home: View {
     let viewmodel: ProductViewModel
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
+    @State var selectedProduct: Product?
     
     var body: some View {
         NavigationStack {
             if viewmodel.isLoading {
                 ProgressView()
             } else {
-                ScrollView() {
+                ScrollView {
                     VStack(alignment: .leading) {
                         Text("Deals of the day")
                             .font(.system(.title2, weight: .bold))
@@ -35,6 +36,9 @@ struct Home: View {
                         LazyVGrid(columns: columns, spacing: 8) {
                             ForEach(viewmodel.products) { product in
                                 ProductCard(product: product)
+                                    .onTapGesture {
+                                        selectedProduct = product
+                                    }
                             }
                             .refreshable {
                                 await viewmodel.getProducts()
@@ -47,10 +51,13 @@ struct Home: View {
                 .navigationTitle("Home")
             }
         }
-        
         .task {
             await viewmodel.getProducts()
             await viewmodel.getProduct(by: 1)
+        }
+        .sheet(item: $selectedProduct) { product in
+            ProductDetails(viewmodel: viewmodel, productID: product.id)
+                .presentationDragIndicator(.visible)
         }
     }
 }
