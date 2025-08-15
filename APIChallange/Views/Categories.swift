@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Categories: View {
-    @State var viewModel: CategoryViewModel
+    @State var viewModel: CategoryViewModelProtocol
     
     var body: some View {
         NavigationStack {
@@ -23,6 +23,9 @@ struct Categories: View {
                                     .font(.subheadline)
                             }
                             .frame(width: 84, height: 112)
+                            .onTapGesture {
+                                viewModel.navigateToCategory = category
+                            }
                         }
                     }
                 }
@@ -31,6 +34,9 @@ struct Categories: View {
                 
                 List(viewModel.filteredCategories) { category in
                     CategoryView(category: category)
+                        .onTapGesture {
+                            viewModel.navigateToCategory = category
+                        }
                 }
                 .scrollIndicators(.hidden)
                 .listStyle(.inset)
@@ -38,6 +44,8 @@ struct Categories: View {
             }
         }
         .navigationTitle("Categories")
-    
+        .navigationDestination(item: $viewModel.navigateToCategory) { category in
+            CategoryProducts(viewModel: CategoryProductsViewModel(category: category, productViewModel: ProductViewModel(service: ProductService())))
+        }
     }
 }
