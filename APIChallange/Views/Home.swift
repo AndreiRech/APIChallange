@@ -57,6 +57,7 @@ struct Home: View {
         }
         .sheet(item: $selectedProduct) { product in
             ProductDetails(viewmodel: viewmodel, productID: product.id)
+                .presentationDragIndicator(.visible)
         }
     }
 }

@@ -80,6 +80,11 @@ struct ProductDetails: View {
                     }
                 }
                 .padding()
+                .navigationTitle("Details")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbarBackground(.visible, for: .navigationBar)
+                .toolbar(.visible, for: .navigationBar)
+                .toolbarBackground(Color(.tertiarySystemBackground), for: .navigationBar)
             }
         }
         .task {
