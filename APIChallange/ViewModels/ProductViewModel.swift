@@ -19,11 +19,9 @@ class ProductViewModel: ProductViewModelProtocol {
     
     private let service: ProductsServiceProtocol
 
-        
     init(service: ProductsServiceProtocol) {
         self.service = service
     }
-    
     
     func getProducts() async {
         isLoading = true
