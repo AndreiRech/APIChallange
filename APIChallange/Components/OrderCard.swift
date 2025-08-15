@@ -11,10 +11,7 @@ struct OrderCard: View {
     var body: some View {
         HStack {
 //            AsyncImage(url:) // TODO: colocar a imagem com async quando tiver a api.
-            Image(.placeholder)
-                .resizable()
-                .frame(width: 80, height: 80)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
+            DefaultImage(imageName: "bag.fill")
             
             HStack(spacing: 16){
                 VStack (alignment: .leading, spacing: 4) {

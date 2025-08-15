@@ -49,7 +49,6 @@ struct Home: View {
                     .scrollIndicators(.hidden)
                 }
                 .navigationTitle("Home")
-                
             }
         }
         .task {

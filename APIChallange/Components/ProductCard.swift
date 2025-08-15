@@ -50,6 +50,8 @@ struct ProductCard: View {
                 Text("US$ \(product.price.description)")
                     .font(.headline)
             }
+            .frame(maxHeight: .infinity)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(8)
         .frame(height: 250)
