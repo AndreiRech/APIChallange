@@ -8,16 +8,14 @@
 import SwiftUI
 
 struct Categories: View {
-    let viewModel: CategoryViewModel
-    
-    @State var searchText: String = ""
+    @State var viewModel: CategoryViewModel
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 16) {
                 ScrollView(.horizontal) {
                     HStack(alignment: .center) {
-                        ForEach(viewModel.filteredCategories(searchText: searchText)) { category in
+                        ForEach(viewModel.filteredCategories) { category in
                             VStack(spacing: 8) {
                                 DefaultImage(imageName: category.imageName)
                                 
@@ -31,14 +29,15 @@ struct Categories: View {
                 .padding(.horizontal, 16)
                 .scrollIndicators(.hidden)
                 
-                List(viewModel.filteredCategories(searchText: searchText)) { category in
+                List(viewModel.filteredCategories) { category in
                     CategoryView(category: category)
                 }
                 .scrollIndicators(.hidden)
                 .listStyle(.inset)
-                .searchable(text: $searchText, prompt: "Search")
+                .searchable(text: $viewModel.searchText, prompt: "Search")
             }
         }
         .navigationTitle("Categories")
+    
     }
 }

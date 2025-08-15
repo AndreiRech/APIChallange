@@ -8,5 +8,5 @@
 import Foundation
 
 protocol CategoryViewModelProtocol {
-    func filteredCategories(searchText: String) -> [ProductCategory]
+    var filteredCategories: [ProductCategory] { get }
 }

@@ -10,7 +10,9 @@ import SwiftUI
 
 @Observable
 class CategoryViewModel: CategoryViewModelProtocol {
-    func filteredCategories(searchText: String) -> [ProductCategory] {
+    @State var searchText: String = ""
+    
+    var filteredCategories: [ProductCategory] {
         if searchText.isEmpty {
             return ProductCategory.allCases
         } else {
