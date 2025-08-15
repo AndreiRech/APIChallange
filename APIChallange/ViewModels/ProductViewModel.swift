@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class ProductViewModel: ProductViewModelProtocol {
+class ProductViewModel: ProductViewModelProtocol, ObservableObject {
     var product: Product?
 
     var products: [Product] = []
@@ -18,10 +18,13 @@ class ProductViewModel: ProductViewModelProtocol {
     var errorMessage: String?
     
     private let service: ProductsServiceProtocol
+    
+    private let database: SwiftDataService
 
         
-    init(service: ProductsServiceProtocol) {
+    init(service: ProductsServiceProtocol, database: SwiftDataService) {
         self.service = service
+        self.database = database
     }
     
     
@@ -45,5 +48,30 @@ class ProductViewModel: ProductViewModelProtocol {
         if let product = products.first(where: { $0.id == id }) {
             self.product = product
         }
+    }
+    
+    func addProductToStorage(product: Product) {
+        if let product = products.first(where: { $0.id == product.id }) {
+            database.addProduct(StoredProduct(
+                id: product.id,
+                title: product.title,
+                details: product.description,
+                category: product.category,
+                price: product.price,
+                shippingInformation: product.shippingInformation,
+                thumbnail: product.thumbnail,
+                isFavorite: false,
+                isOnCart: true,
+                isOrdered: false
+            ))
+        }
+    }
+    
+    func getProductsFromStorage() -> [StoredProduct] {
+        return database.fetchCartProducts()
+    }
+    
+    func removeProductFromCart(_ product: StoredProduct) {
+        database.removeProduct(product)
     }
 }

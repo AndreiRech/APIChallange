@@ -11,33 +11,31 @@ struct TabBar: View {
     var body: some View {
         TabView {
             Tab("Home", systemImage: "house.fill") {
-                NavigationStack {
-                    Home(viewmodel: ProductViewModel(service: ProductService()))
-                }
+                Home(viewmodel: ProductViewModel(service: ProductService(), database: .shared))
             }
             
             Tab("Categories", systemImage: "square.grid.2x2.fill") {
-                NavigationStack {
-                    Categories(viewModel: CategoryViewModel())
-                }
+                Categories(viewModel: CategoryViewModel())
             }
             
             Tab("Cart", systemImage: "cart.fill") {
-                NavigationStack {
-                    Home(viewmodel: ProductViewModel(service: ProductService()))
-                }
+                CartView()
             }
             
             Tab("Favorites", systemImage: "heart.fill") {
-                NavigationStack {
-                    Home(viewmodel: ProductViewModel(service: ProductService()))
-                }
+                EmptyState(
+                    image: "heart.fill", 
+                    title: "Favoritos", 
+                    description: "Seus produtos favoritos aparecerão aqui"
+                )
             }
             
             Tab("Orders", systemImage: "bag.fill") {
-                NavigationStack {
-                    Home(viewmodel: ProductViewModel(service: ProductService()))
-                }
+                EmptyState(
+                    image: "bag.fill", 
+                    title: "Pedidos", 
+                    description: "Seus pedidos aparecerão aqui"
+                )
             }
         }
     }

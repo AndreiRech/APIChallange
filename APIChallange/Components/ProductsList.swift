@@ -9,45 +9,70 @@ import SwiftUI
 
 struct ProductsList: View {
     var hasPicker: Bool = false
+    var product: StoredProduct
+    var onQuantityChange: ((Int) -> Void)?
+    var onAddToCart: (() -> Void)?
+    
+    @State private var quantity: Int = 1
     
     var body: some View {
         HStack {
-//            AsyncImage(url:) // TODO: colocar a imagem com async quando tiver a api.
-            DefaultImage(imageName: "bag.fill")
+            AsyncImage(url: URL(string: product.thumbnail)) { image in
+                image.resizable()
+                    .scaledToFit()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundStyle(Color(.tertiarySystemFill))
+                    )
+            } placeholder: {
+                DefaultImage(imageName: "bag.fill", large: true)
+            }
             
             HStack(spacing: 16){
                 VStack (alignment: .leading, spacing: 4) {
-                    Text("Product name with two or more lines goes here")
+                    Text(product.title)
                         .font(.system(.footnote, weight: .regular))
+                        .lineLimit(2)
                     
-                    Text("US$ 00,00")
+                    Text("US$ \(product.price.description)")
                         .font(.system(.headline, weight: .bold))
                 }
                 if hasPicker {
                     HStack(spacing: 8) {
-                        Image(systemName: "minus")
-                            .font(.system(size: 12, weight: .bold))
-                            .frame(width: 23, height: 23)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .foregroundStyle(Color(.tertiarySystemFill))
-                            )
+                        Button {
+                            if quantity > 1 {
+                                quantity -= 1
+                                onQuantityChange?(quantity)
+                            }
+                        } label: {
+                            Image(systemName: "minus")
+                                .font(.system(size: 12, weight: .bold))
+                                .frame(width: 23, height: 23)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .foregroundStyle(Color(.tertiarySystemFill))
+                                )
+                        }
                         
-                        Text("1")
+                        Text("\(quantity)")
                             .font(.system(.body, weight: .regular))
                         
-                        Image(systemName: "plus")
-                            .font(.system(size: 12, weight: .bold))
-                            .frame(width: 23, height: 23)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .foregroundStyle(Color(.tertiarySystemFill))
-                            )
-                            
+                        Button {
+                            quantity += 1
+                            onQuantityChange?(quantity)
+                        } label: {
+                            Image(systemName: "plus")
+                                .font(.system(size: 12, weight: .bold))
+                                .frame(width: 23, height: 23)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .foregroundStyle(Color(.tertiarySystemFill))
+                                )
+                        }
                     }
                 } else {
                     Button {
-                        // action
+                        onAddToCart?()
                     } label: {
                         Image(systemName: "cart.fill")
                             .foregroundColor(.primary)
@@ -59,10 +84,8 @@ struct ProductsList: View {
                     }
                 }
             }
-            .padding(.trailing, 16)
         }
-        .padding(.leading, 8)
-        .padding(.vertical, 8)
+        .frame(height: 94)
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(Color(.secondarySystemBackground))
@@ -70,6 +93,3 @@ struct ProductsList: View {
     }
 }
 
-#Preview {
-    ProductsList(hasPicker: true)
-}
