@@ -13,5 +13,6 @@ protocol CategoryProductsViewModelProtocol {
     var category: ProductCategory { get }
     var filteredProducts: [Product] { get }
     var productViewModel: ProductViewModelProtocol { get }
+    
     func loadProducts() async
 }

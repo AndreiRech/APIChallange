@@ -61,7 +61,3 @@ struct ProductCard: View {
         )
     }
 }
-
-//#Preview {
-//    ProductCard()
-//}

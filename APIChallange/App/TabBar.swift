@@ -25,11 +25,7 @@ struct TabBar: View {
             }
             
             Tab("Favorites", systemImage: "heart.fill") {
-                EmptyState(
-                    image: "heart.fill", 
-                    title: "Favoritos", 
-                    description: "Seus produtos favoritos aparecerão aqui"
-                )
+                FavoriteView()
             }
             
             Tab("Orders", systemImage: "bag.fill") {

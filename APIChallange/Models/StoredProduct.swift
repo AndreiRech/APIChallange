@@ -17,9 +17,6 @@ class StoredProduct {
     var price: Double
     var shippingInformation: String
     var thumbnail: String
-    var isFavorite: Bool
-    var isOnCart: Bool
-    var isOrdered: Bool
     
     init(
         id: Int,
@@ -29,9 +26,6 @@ class StoredProduct {
         price: Double,
         shippingInformation: String,
         thumbnail: String,
-        isFavorite: Bool,
-        isOnCart: Bool,
-        isOrdered: Bool
     ) {
         self.id = id
         self.title = title
@@ -40,8 +34,5 @@ class StoredProduct {
         self.price = price
         self.shippingInformation = shippingInformation
         self.thumbnail = thumbnail
-        self.isFavorite = isFavorite
-        self.isOnCart = isOnCart
-        self.isOrdered = isOrdered
     }
 }

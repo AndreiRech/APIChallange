@@ -33,7 +33,10 @@ struct ProductDetails: View {
                                 }
                                 .frame(width: 361, height: 361)
                                 .overlay(
-                                    Button { isFavorite.toggle() } label: {
+                                    Button {
+                                        viewmodel.addToFavorite(product: product)
+                                        isFavorite.toggle()
+                                    } label: {
                                         Image(systemName: isFavorite ? "heart.fill" : "heart")
                                             .resizable()
                                             .foregroundStyle(Color(.label))

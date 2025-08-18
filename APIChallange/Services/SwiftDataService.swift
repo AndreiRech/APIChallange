@@ -17,7 +17,10 @@ class SwiftDataService {
     
     @MainActor
     init() {
-        self.modelContainer = try! ModelContainer(for: StoredProduct.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        self.modelContainer = try! ModelContainer(
+            for: StoredProduct.self, Favorite.self, Cart.self, Order.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+        )
         self.modelContext = modelContainer.mainContext
     }
     
@@ -29,12 +32,32 @@ class SwiftDataService {
         }
     }
     
-    func fetchCartProducts() -> [StoredProduct] {
+    func fetchFavoriteProducts() -> [StoredProduct] {
         do {
-            let descriptor = FetchDescriptor<StoredProduct>(
-                predicate: #Predicate<StoredProduct> { $0.isOnCart == true }
-            )
-            return try modelContext.fetch(descriptor)
+            let products = fetchProducts()
+            let favorites = try modelContext.fetch(FetchDescriptor<Favorite>())
+            
+            let finalProducts = products.filter { product in
+                favorites.contains { $0.productId == product.id }
+            }
+                    
+            return finalProducts
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func fetchCartProducts() -> [Cart] {
+        do {
+            return try modelContext.fetch(FetchDescriptor<Cart>())
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func fetchOrderProducts() -> [Order] {
+        do {
+            return try modelContext.fetch(FetchDescriptor<Order>())
         } catch {
             fatalError(error.localizedDescription)
         }
@@ -51,6 +74,15 @@ class SwiftDataService {
     
     func removeProduct(_ product: StoredProduct) {
         modelContext.delete(product)
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func addToFavorite(_ id: Int) {
+        modelContext.insert(Favorite(productId: id))
         do {
             try modelContext.save()
         } catch {
