@@ -65,7 +65,7 @@ struct ProductDetails: View {
                         }
 
                         Button {
-                            // action
+                            viewmodel.addProductToStorage(product: product)
                         } label: {
                             Text("Add to Cart")
                                 .font(.system(.body, weight: .semibold))
