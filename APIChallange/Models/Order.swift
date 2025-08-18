@@ -9,11 +9,11 @@ import Foundation
 import SwiftData
 
 @Model
-class Order: Identifiable {
+final class Order: Identifiable {
     var id = UUID()
-    var products: [Product] = []
+    var products: [StoredProduct] = []
     
-    init(id: UUID = UUID(), products: [Product]) {
+    init(id: UUID = UUID(), products: [StoredProduct]) {
         self.id = id
         self.products = products
     }

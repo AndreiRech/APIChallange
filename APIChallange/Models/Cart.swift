@@ -11,10 +11,12 @@ import SwiftData
 @Model
 final class Cart: Identifiable {
     var id = UUID()
-    var products: [Product: Int]
+    var productId: Int
+    var quantity: Int
     
-    init(id: UUID = UUID(), products: [Product : Int]) {
+    init(id: UUID = UUID(), productId: Int, quantity: Int) {
         self.id = id
-        self.products = products
+        self.productId = productId
+        self.quantity = quantity
     }
 }

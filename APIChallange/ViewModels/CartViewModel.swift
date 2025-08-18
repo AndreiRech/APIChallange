@@ -9,7 +9,7 @@ import Foundation
 
 @Observable
 class CartViewModel: CartViewModelProtocol, ObservableObject {
-    var cartProducts: [StoredProduct] = []
+    var cartProducts: [Cart] = []
     var isLoading: Bool = false
     var errorMessage: String?
     

@@ -12,7 +12,8 @@ protocol ProductViewModelProtocol {
     var products: [Product] { get }
     var isLoading: Bool { get }
     var errorMessage: String? { get }
+    
     func getProducts() async
     func getProduct(by id: Int) async
-    func addProductToStorage(product: Product)
+    func addProductToStorage(product: Product, isFavorite: Bool, isOnCart: Bool, isOrdered: Bool)
 }

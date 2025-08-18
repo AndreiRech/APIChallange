@@ -48,24 +48,23 @@ class ProductViewModel: ProductViewModelProtocol, ObservableObject {
         }
     }
     
-    func addProductToStorage(product: Product) {
-        if let product = products.first(where: { $0.id == product.id }) {
-            database.addProduct(StoredProduct(
-                id: product.id,
-                title: product.title,
-                details: product.description,
-                category: product.category,
-                price: product.price,
-                shippingInformation: product.shippingInformation,
-                thumbnail: product.thumbnail,
-                isFavorite: false,
-                isOnCart: true,
-                isOrdered: false
-            ))
-        }
+    func addProductToStorage(product: Product, isFavorite: Bool = false, isOnCart: Bool = false, isOrdered: Bool = false) {
+        database.addProduct(StoredProduct(
+            id: product.id,
+            title: product.title,
+            details: product.description,
+            category: product.category,
+            price: product.price,
+            shippingInformation: product.shippingInformation,
+            thumbnail: product.thumbnail,
+        ))
     }
     
-    func getProductsFromStorage() -> [StoredProduct] {
+    func addToFavorite(product: Product) {
+        database.addToFavorite(product.id)
+    }
+    
+    func getProductsFromStorage() -> [Cart] {
         return database.fetchCartProducts()
     }
     

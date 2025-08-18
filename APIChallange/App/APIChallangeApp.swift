@@ -14,6 +14,6 @@ struct APIChallangeApp: App {
         WindowGroup {
             TabBar()
         }
-        .modelContainer(for: [Cart.self, Order.self])
+        .modelContainer(for: [Cart.self, Order.self, Favorite.self])
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CartViewModelProtocol {
-    var cartProducts: [StoredProduct] { get }
+    var cartProducts: [Cart] { get }
     var isLoading: Bool { get }
     var errorMessage: String? { get }
     
