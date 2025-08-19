@@ -74,4 +74,37 @@ class SwiftDataService {
             fatalError(error.localizedDescription)
         }
     }
+    
+    func removeCartProduct(_ productId: Int) {
+        let cartProducts = fetchCartProducts()
+        
+        modelContext.delete(cartProducts.first(where: { $0.productId == productId })!)
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func removeFavoriteProduct(_ productId: Int) {
+        let favoriteProducts = fetchFavoriteProducts()
+        
+        modelContext.delete(favoriteProducts.first(where: { $0.productId == productId })!)
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func editQuantityProduct(_ productId: Int, _ newQuantity: Int) {
+        let cartProducts = fetchCartProducts()
+        
+        cartProducts.first(where: { $0.productId == productId })?.quantity = newQuantity
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
 }

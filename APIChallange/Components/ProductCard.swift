@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProductCard: View {
-    @State var isFavorite: Bool = false
+    @State var isFavorite: Bool
     var product: Product
     
     var body: some View {
@@ -27,6 +27,7 @@ struct ProductCard: View {
             .overlay(
                 Button {
                     isFavorite.toggle()
+                    
                 } label: {
                     Image(systemName: isFavorite ? "heart.fill" : "heart")
                         .resizable()

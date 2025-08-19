@@ -10,11 +10,10 @@ import SwiftUI
 struct ProductsList: View {
     var hasPicker: Bool = false
     var product: Product
+    @State var quantity: Int
     var onQuantityChange: ((Int) -> Void)?
     var onAddToCart: (() -> Void)?
-    
-    @State private var quantity: Int = 1
-    
+        
     var body: some View {
         HStack {
             AsyncImage(url: URL(string: product.thumbnail)) { image in
@@ -22,7 +21,7 @@ struct ProductsList: View {
                     .scaledToFit()
                     .background(
                         RoundedRectangle(cornerRadius: 8)
-                            .foregroundStyle(Color(.green))
+                            .foregroundStyle(Color(.tertiarySystemFill))
                     )
             } placeholder: {
                 DefaultImage(imageName: "bag.fill", large: false)
@@ -47,10 +46,13 @@ struct ProductsList: View {
                             if quantity > 1 {
                                 quantity -= 1
                                 onQuantityChange?(quantity)
+                            } else {
+                                onQuantityChange?(0)
                             }
                         } label: {
                             Image(systemName: "minus")
                                 .font(.system(size: 12, weight: .bold))
+                                .foregroundStyle(Color(.label))
                                 .frame(width: 23, height: 23)
                                 .background(
                                     RoundedRectangle(cornerRadius: 8)
@@ -67,6 +69,7 @@ struct ProductsList: View {
                         } label: {
                             Image(systemName: "plus")
                                 .font(.system(size: 12, weight: .bold))
+                                .foregroundStyle(Color(.label))
                                 .frame(width: 23, height: 23)
                                 .background(
                                     RoundedRectangle(cornerRadius: 8)

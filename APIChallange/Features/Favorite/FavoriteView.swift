@@ -10,6 +10,7 @@ import SwiftUI
 struct FavoriteView: View {
     @StateObject private var viewModel = FavoriteViewModel(database: .shared)
     var productViewModel: ProductViewModelProtocol
+    @State var selectedProduct: Product?
     
     var body: some View {
         NavigationStack {
@@ -26,7 +27,9 @@ struct FavoriteView: View {
                             ProductsList(
                                 hasPicker: false,
                                 product: product,
-                                onQuantityChange: { quantity in
+                                quantity: 0,
+                                onAddToCart: {
+                                    selectedProduct = product
                                 }
                             )
                         }
@@ -39,6 +42,10 @@ struct FavoriteView: View {
         .task {
             await productViewModel.getProducts()
             viewModel.loadFavoriteProducts(allProducts: productViewModel.products)
+        }
+        .sheet(item: $selectedProduct) { product in
+            ProductDetails(viewModel: ProductViewModel(service: ProductService(), database: .shared), productID: product.id)
+                .presentationDragIndicator(.visible)
         }
     }
 }

@@ -20,7 +20,7 @@ struct CategoryProducts: View {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 8) {
                         ForEach(viewModel.filteredProducts) { product in
-                            ProductCard(product: product)
+                            ProductCard(isFavorite: false, product: product)
                                 .onTapGesture {
                                     selectedProduct = product
                                 }

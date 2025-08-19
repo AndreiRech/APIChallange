@@ -8,35 +8,44 @@
 import SwiftUI
 
 struct OrderCard: View {
+    var product: Product
+    
     var body: some View {
         HStack {
-//            AsyncImage(url:) // TODO: colocar a imagem com async quando tiver a api.
-            DefaultImage(imageName: "bag.fill")
+            AsyncImage(url: URL(string: product.thumbnail)) { image in
+                image.resizable()
+                    .scaledToFit()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundStyle(Color(.tertiarySystemFill))
+                    )
+            } placeholder: {
+                DefaultImage(imageName: "bag.fill", large: false)
+            }
+            .frame(width: 80, height: 80)
+            .padding(8)
             
             HStack(spacing: 16){
                 VStack (alignment: .leading, spacing: 4) {
-                    Text("DELIVERY BY MONTH, 00")
+                    Text(product.shippingInformation)
                         .font(.system(.caption, weight: .regular))
                     
-                    Text("Product name with two or more lines goes here")
+                    Text(product.description)
                         .font(.system(.footnote, weight: .regular))
                         .lineLimit(1)
                     
-                    Text("US$ 00,00")
-                        .font(.system(.headline, weight: .bold))
+                    Text(product.price.formatted(
+                        .currency(code: "BRL")
+                        .precision(.fractionLength(2))
+                    ))
+                    .font(.system(.headline, weight: .bold))
                 }
             }
             .padding(.trailing, 16)
         }
-        .padding(.leading, 8)
-        .padding(.vertical, 8)
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(Color(.secondarySystemBackground))
         )
     }
-}
-
-#Preview {
-    OrderCard()
 }
