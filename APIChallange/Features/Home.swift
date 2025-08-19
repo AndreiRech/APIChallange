@@ -8,20 +8,20 @@
 import SwiftUI
 
 struct Home: View {
-    let viewmodel: ProductViewModel
+    let viewModel: ProductViewModel
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     @State var selectedProduct: Product?
     
     var body: some View {
         NavigationStack {
-            if viewmodel.isLoading {
+            if viewModel.isLoading {
                 ProgressView()
             } else {
                 ScrollView {
                     VStack(alignment: .leading) {
                         Text("Deals of the day")
                             .font(.system(.title2, weight: .bold))
-                        if let product = viewmodel.product {
+                        if let product = viewModel.product {
                             ProductCardLarge(product: product)
                                 .onTapGesture {
                                     selectedProduct = product
@@ -37,14 +37,14 @@ struct Home: View {
                             .font(.system(.title2, weight: .bold))
                         
                         LazyVGrid(columns: columns, spacing: 8) {
-                            ForEach(viewmodel.products) { product in
-                                ProductCard(product: product)
+                            ForEach(viewModel.products) { product in
+                                ProductCard(isFavorite: false, product: product)
                                     .onTapGesture {
                                         selectedProduct = product
                                     }
                             }
                             .refreshable {
-                                await viewmodel.getProducts()
+                                await viewModel.getProducts()
                             }
                         }
                     }
@@ -55,11 +55,11 @@ struct Home: View {
             }
         }
         .task {
-            await viewmodel.getProducts()
-            await viewmodel.getProduct(by: 1)
+            await viewModel.getProducts()
+            await viewModel.getProduct(by: 1)
         }
         .sheet(item: $selectedProduct) { product in
-            ProductDetails(viewModel: viewmodel, productID: product.id)
+            ProductDetails(viewModel: viewModel, productID: product.id)
                 .presentationDragIndicator(.visible)
         }
     }

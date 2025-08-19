@@ -10,6 +10,7 @@ import SwiftUI
 struct CartView: View {
     @StateObject private var viewModel = CartViewModel(database: .shared)
     var productViewModel: ProductViewModelProtocol
+    @State var changed: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -20,29 +21,71 @@ struct CartView: View {
                     description: "Adicione produtos ao seu carrinho"
                 )
             } else {
-                ScrollView {
-                    LazyVStack(spacing: 12) {
-                        ForEach(viewModel.cartProducts, id: \.self) { product in
-                            ProductsList(
-                                hasPicker: true,
-                                product: product,
-                                onQuantityChange: { quantity in
-                                }
-                            )
+                VStack {
+                    ScrollView {
+                        LazyVStack(spacing: 12) {
+                            ForEach(viewModel.cartProducts, id: \.self) { product in
+                                ProductsList(
+                                    hasPicker: true,
+                                    product: product,
+                                    quantity: viewModel.getQuantity(by: product.id),
+                                    onQuantityChange: { quantity in
+                                        if quantity == 0 {
+                                            viewModel.removeProduct(product.id)
+                                            changed = true
+                                        } else {
+                                            viewModel.updateProductQuantity(product.id, quantity: quantity)
+                                        }
+                                    }
+                                )
+                            }
                         }
-//                        .onDelete { indexSet in
-//                            for index in indexSet {
-//                                viewModel.removeProduct(viewModel.cartProducts[index])
-//                            }
-//                        }
+                    }
+                    
+                    Spacer()
+                    
+                    VStack(spacing: 16) {
+                        HStack {
+                            Text("Total:")
+                                .font(.subheadline)
+                            
+                            Spacer()
+                            
+                            Text(viewModel.totalSum.formatted(
+                                .currency(code: "BRL")
+                                .precision(.fractionLength(2))
+                            ))
+                            .font(.headline)
+                        }
+                        
+                        Button {
+                            viewModel.clearCart()
+                        } label: {
+                            Text("Checkout")
+                                .fontWeight(.bold)
+                                .foregroundStyle(Color(.label))
+                                .padding(.vertical, 16)
+                        }
+                        .frame(height: 54)
+                        .frame(maxWidth: .infinity)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .foregroundStyle(Color(.tertiarySystemFill))
+                        )
                     }
                 }
+                .padding()
                 .navigationTitle("Cart")
             }
         }
         .task {
             await productViewModel.getProducts()
             viewModel.loadCartProducts(allProducts: productViewModel.products)
+        }
+        .onChange(of: changed) { _, _ in
+            viewModel.loadCartProducts(allProducts: productViewModel.products)
+            viewModel.calculateTotalSum()
+            changed = false
         }
     }
 }

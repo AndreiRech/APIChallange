@@ -23,15 +23,13 @@ struct OrderView: View {
                 ScrollView {
                     LazyVStack(spacing: 12) {
                         ForEach(viewModel.filteredProducts, id: \.self) { product in
-                            ProductsList(
-                                hasPicker: false,
-                                product: product,
-                                onQuantityChange: { quantity in
-                                }
+                            OrderCard(
+                                product: product
                             )
                         }
                     }
                 }
+                .padding()
                 .searchable(text: $viewModel.searchText, prompt: "Search")
                 .navigationTitle("Orders")
             }

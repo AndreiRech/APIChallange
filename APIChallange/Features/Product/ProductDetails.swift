@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct ProductDetails: View {
-    var viewModel: ProductViewModel
-    let productID: Int
+    @Environment(\.dismiss) var dismiss
     @State private var isFavorite = false
+    var viewModel: ProductViewModelProtocol
+    let productID: Int
 
     var body: some View {
         NavigationStack {
@@ -69,6 +70,7 @@ struct ProductDetails: View {
 
                         Button {
                             viewModel.addToCart(product: product)
+                            dismiss()
                         } label: {
                             Text("Add to Cart")
                                 .font(.system(.body, weight: .semibold))
