@@ -20,7 +20,7 @@ struct DefaultImage: View {
             .frame(width: large ? 160 : 84, height: large ? 160 : 84)
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .foregroundStyle(Color(.secondarySystemBackground))
+                    .foregroundStyle(Color(.quaternarySystemFill))
             )
             .foregroundStyle(Color(.secondarySystemFill))
     }

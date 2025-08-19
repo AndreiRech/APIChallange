@@ -23,6 +23,9 @@ struct Home: View {
                             .font(.system(.title2, weight: .bold))
                         if let product = viewmodel.product {
                             ProductCardLarge(product: product)
+                                .onTapGesture {
+                                    selectedProduct = product
+                                }
                         }
                     }
                     .padding(.horizontal, 16)
@@ -56,7 +59,7 @@ struct Home: View {
             await viewmodel.getProduct(by: 1)
         }
         .sheet(item: $selectedProduct) { product in
-            ProductDetails(viewmodel: viewmodel, productID: product.id)
+            ProductDetails(viewModel: viewmodel, productID: product.id)
                 .presentationDragIndicator(.visible)
         }
     }

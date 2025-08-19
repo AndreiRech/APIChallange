@@ -21,19 +21,15 @@ struct TabBar: View {
             }
             
             Tab("Cart", systemImage: "cart.fill") {
-                CartView()
+                CartView(productViewModel: ProductViewModel(service: ProductService(), database: .shared))
             }
             
             Tab("Favorites", systemImage: "heart.fill") {
-                FavoriteView()
+                FavoriteView(productViewModel: ProductViewModel(service: ProductService(), database: .shared))
             }
             
             Tab("Orders", systemImage: "bag.fill") {
-                EmptyState(
-                    image: "bag.fill", 
-                    title: "Pedidos", 
-                    description: "Seus pedidos aparecerão aqui"
-                )
+                OrderView(productViewModel: ProductViewModel(service: ProductService(), database: .shared))
             }
         }
     }

@@ -41,7 +41,7 @@ struct CategoryProducts: View {
             await viewModel.loadProducts()
         }
         .sheet(item: $selectedProduct) { product in
-            ProductDetails(viewmodel: ProductViewModel(service: ProductService(), database: .shared), productID: product.id)
+            ProductDetails(viewModel: ProductViewModel(service: ProductService(), database: .shared), productID: product.id)
                 .presentationDragIndicator(.visible)
         }
     }

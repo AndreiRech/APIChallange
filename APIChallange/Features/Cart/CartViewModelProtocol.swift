@@ -8,11 +8,11 @@
 import Foundation
 
 protocol CartViewModelProtocol {
-    var cartProducts: [Cart] { get }
+    var cartProducts: [Product] { get }
     var isLoading: Bool { get }
     var errorMessage: String? { get }
     
-    func loadCartProducts()
-    func removeProduct(_ product: StoredProduct)
-    func updateProductQuantity(_ product: StoredProduct, quantity: Int)
+    func loadCartProducts(allProducts: [Product])
+    func removeProduct(_ productId: Int)
+    func updateProductQuantity(_ productId: Int, quantity: Int)
 }

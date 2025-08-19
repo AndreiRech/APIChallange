@@ -18,30 +18,15 @@ class SwiftDataService {
     @MainActor
     init() {
         self.modelContainer = try! ModelContainer(
-            for: StoredProduct.self, Favorite.self, Cart.self, Order.self,
-            configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+            for: Favorite.self, Cart.self, Order.self,
+//            configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
         self.modelContext = modelContainer.mainContext
     }
     
-    func fetchProducts() -> [StoredProduct] {
+    func fetchFavoriteProducts() -> [Favorite] {
         do {
-            return try modelContext.fetch(FetchDescriptor<StoredProduct>())
-        } catch {
-            fatalError(error.localizedDescription)
-        }
-    }
-    
-    func fetchFavoriteProducts() -> [StoredProduct] {
-        do {
-            let products = fetchProducts()
-            let favorites = try modelContext.fetch(FetchDescriptor<Favorite>())
-            
-            let finalProducts = products.filter { product in
-                favorites.contains { $0.productId == product.id }
-            }
-                    
-            return finalProducts
+            return try modelContext.fetch(FetchDescriptor<Favorite>())
         } catch {
             fatalError(error.localizedDescription)
         }
@@ -63,8 +48,8 @@ class SwiftDataService {
         }
     }
     
-    func addProduct(_ product: StoredProduct) {
-        modelContext.insert(product)
+    func addToFavorite(_ productId: Int) {
+        modelContext.insert(Favorite(productId: productId))
         do {
             try modelContext.save()
         } catch {
@@ -72,8 +57,8 @@ class SwiftDataService {
         }
     }
     
-    func removeProduct(_ product: StoredProduct) {
-        modelContext.delete(product)
+    func addToCart(_ productId: Int, _ quantity: Int) {
+        modelContext.insert(Cart(productId: productId, quantity: quantity))
         do {
             try modelContext.save()
         } catch {
@@ -81,8 +66,8 @@ class SwiftDataService {
         }
     }
     
-    func addToFavorite(_ id: Int) {
-        modelContext.insert(Favorite(productId: id))
+    func addToOrder(_ productId: Int) {
+        modelContext.insert(Order(productId: productId))
         do {
             try modelContext.save()
         } catch {

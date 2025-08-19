@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductsList: View {
     var hasPicker: Bool = false
-    var product: StoredProduct
+    var product: Product
     var onQuantityChange: ((Int) -> Void)?
     var onAddToCart: (() -> Void)?
     
@@ -22,11 +22,12 @@ struct ProductsList: View {
                     .scaledToFit()
                     .background(
                         RoundedRectangle(cornerRadius: 8)
-                            .foregroundStyle(Color(.tertiarySystemFill))
+                            .foregroundStyle(Color(.green))
                     )
             } placeholder: {
-                DefaultImage(imageName: "bag.fill", large: true)
+                DefaultImage(imageName: "bag.fill", large: false)
             }
+            .frame(width: 80, height: 80)
             
             HStack(spacing: 16){
                 VStack (alignment: .leading, spacing: 4) {
@@ -37,6 +38,9 @@ struct ProductsList: View {
                     Text("US$ \(product.price.description)")
                         .font(.system(.headline, weight: .bold))
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(height: 62)
+                
                 if hasPicker {
                     HStack(spacing: 8) {
                         Button {
@@ -84,8 +88,11 @@ struct ProductsList: View {
                     }
                 }
             }
+                .padding(.leading, 16)
         }
-        .frame(height: 94)
+        .padding(.leading, 8)
+        .padding(.trailing, 16)
+        .frame(width: 361, height: 94)
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(Color(.secondarySystemBackground))

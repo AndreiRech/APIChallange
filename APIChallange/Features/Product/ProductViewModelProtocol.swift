@@ -15,5 +15,10 @@ protocol ProductViewModelProtocol {
     
     func getProducts() async
     func getProduct(by id: Int) async
-    func addProductToStorage(product: Product, isFavorite: Bool, isOnCart: Bool, isOrdered: Bool)
+    
+    func addToFavorite(product: Product)
+    func addToCart(product: Product)
+    func addToOrder(product: Product)
+    
+    
 }

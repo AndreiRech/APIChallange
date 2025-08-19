@@ -10,15 +10,11 @@ import Foundation
 @Observable
 class ProductViewModel: ProductViewModelProtocol, ObservableObject {
     var product: Product?
-
     var products: [Product] = []
-
     var isLoading: Bool = false
-
     var errorMessage: String?
     
     private let service: ProductsServiceProtocol
-    
     private let database: SwiftDataService
    
     init(service: ProductsServiceProtocol, database: SwiftDataService) {
@@ -48,27 +44,15 @@ class ProductViewModel: ProductViewModelProtocol, ObservableObject {
         }
     }
     
-    func addProductToStorage(product: Product, isFavorite: Bool = false, isOnCart: Bool = false, isOrdered: Bool = false) {
-        database.addProduct(StoredProduct(
-            id: product.id,
-            title: product.title,
-            details: product.description,
-            category: product.category,
-            price: product.price,
-            shippingInformation: product.shippingInformation,
-            thumbnail: product.thumbnail,
-        ))
-    }
-    
     func addToFavorite(product: Product) {
         database.addToFavorite(product.id)
     }
     
-    func getProductsFromStorage() -> [Cart] {
-        return database.fetchCartProducts()
+    func addToCart(product: Product) {
+        database.addToCart(product.id, 1)
     }
     
-    func removeProductFromCart(_ product: StoredProduct) {
-        database.removeProduct(product)
+    func addToOrder(product: Product) {
+        database.addToOrder(product.id)
     }
 }

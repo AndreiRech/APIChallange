@@ -9,9 +9,10 @@ import SwiftUI
 
 struct FavoriteView: View {
     @StateObject private var viewModel = FavoriteViewModel(database: .shared)
+    var productViewModel: ProductViewModelProtocol
     
     var body: some View {
-        VStack {
+        NavigationStack {
             if viewModel.favoriteProducts.isEmpty {
                 EmptyState(
                     image: "heart.fill",
@@ -21,22 +22,23 @@ struct FavoriteView: View {
             } else {
                 ScrollView {
                     LazyVStack(spacing: 12) {
-                        ForEach(viewModel.favoriteProducts, id: \.self) { product in
+                        ForEach(viewModel.filteredProducts, id: \.self) { product in
                             ProductsList(
                                 hasPicker: false,
                                 product: product,
                                 onQuantityChange: { quantity in
-                                    print("Quantity changed to \(quantity) for product: \(product.title)")
                                 }
                             )
                         }
                     }
                 }
+                .searchable(text: $viewModel.searchText, prompt: "Search")
+                .navigationTitle("Favorites")
             }
         }
-        .navigationTitle("Favorites")
-        .onAppear {
-            viewModel.loadFavoriteProducts()
+        .task {
+            await productViewModel.getProducts()
+            viewModel.loadFavoriteProducts(allProducts: productViewModel.products)
         }
     }
 }

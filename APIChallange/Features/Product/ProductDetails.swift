@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct ProductDetails: View {
-    var viewmodel: ProductViewModel
+    var viewModel: ProductViewModel
     let productID: Int
     @State private var isFavorite = false
 
     var body: some View {
         NavigationStack {
-            if viewmodel.isLoading {
+            if viewModel.isLoading {
                 ProgressView()
             } else {
                 VStack {
-                    if let product = viewmodel.product {
+                    if let product = viewModel.product {
                         ScrollView {
                             VStack (alignment: .leading, spacing: 16) {
                                 AsyncImage(url: URL(string: product.thumbnail)) { image in
@@ -29,12 +29,12 @@ struct ProductDetails: View {
                                                 .foregroundStyle(Color(.tertiarySystemFill))
                                         )
                                 } placeholder: {
-                                    DefaultImage(imageName: "bag.fill")
+                                    DefaultImage(imageName: "bag.fill", large: true)
                                 }
                                 .frame(width: 361, height: 361)
                                 .overlay(
                                     Button {
-                                        viewmodel.addToFavorite(product: product)
+                                        viewModel.addToFavorite(product: product)
                                         isFavorite.toggle()
                                     } label: {
                                         Image(systemName: isFavorite ? "heart.fill" : "heart")
@@ -68,7 +68,7 @@ struct ProductDetails: View {
                         }
 
                         Button {
-                            viewmodel.addProductToStorage(product: product)
+                            viewModel.addToCart(product: product)
                         } label: {
                             Text("Add to Cart")
                                 .font(.system(.body, weight: .semibold))
@@ -91,7 +91,7 @@ struct ProductDetails: View {
             }
         }
         .task {
-            await viewmodel.getProduct(by: productID)
+            await viewModel.getProduct(by: productID)
         }
     }
 }

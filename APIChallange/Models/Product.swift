@@ -16,17 +16,6 @@ struct Product: Decodable, Hashable, Identifiable, Encodable {
     var price: Double
     var shippingInformation: String
     var thumbnail: String
-    var isFavorite: Bool = false
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case title
-        case description
-        case category
-        case price
-        case shippingInformation
-        case thumbnail
-    }
 }
 
 struct ProductResponse: Decodable {

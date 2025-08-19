@@ -21,7 +21,7 @@ struct ProductCard: View {
                             .foregroundStyle(Color(.tertiarySystemFill))
                     )
             } placeholder: {
-                DefaultImage(imageName: "bag.fill")
+                DefaultImage(imageName: "bag.fill", large: true)
             }
             .frame(width: 160, height: 160)
             .overlay(

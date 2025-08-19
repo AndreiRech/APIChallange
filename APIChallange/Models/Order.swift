@@ -11,10 +11,10 @@ import SwiftData
 @Model
 final class Order: Identifiable {
     var id = UUID()
-    var products: [StoredProduct] = []
+    var productId: Int
     
-    init(id: UUID = UUID(), products: [StoredProduct]) {
+    init(id: UUID = UUID(), productId: Int) {
         self.id = id
-        self.products = products
+        self.productId = productId
     }
 }

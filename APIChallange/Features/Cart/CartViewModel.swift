@@ -9,7 +9,7 @@ import Foundation
 
 @Observable
 class CartViewModel: CartViewModelProtocol, ObservableObject {
-    var cartProducts: [Cart] = []
+    var cartProducts: [Product] = []
     var isLoading: Bool = false
     var errorMessage: String?
     
@@ -19,18 +19,17 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
         self.database = database
     }
     
-    func loadCartProducts() {
-        isLoading = true
-        cartProducts = database.fetchCartProducts()
-        isLoading = false
+    func loadCartProducts(allProducts: [Product]) {
+        let storedCart = database.fetchCartProducts()
+        let ids = storedCart.map { $0.productId }
+        cartProducts = allProducts.filter { ids.contains($0.id) }
     }
     
-    func removeProduct(_ product: StoredProduct) {
-        database.removeProduct(product)
-        loadCartProducts()
+    func removeProduct(_ productId: Int) {
+        // TODO: implementar
     }
     
-    func updateProductQuantity(_ product: StoredProduct, quantity: Int) {
+    func updateProductQuantity(_ productId: Int, quantity: Int) {
         // TODO: implementar a quantidade
     }
 }
