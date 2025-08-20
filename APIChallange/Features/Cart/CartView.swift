@@ -16,9 +16,9 @@ struct CartView: View {
         NavigationStack {
             if viewModel.cartProducts.isEmpty {
                 EmptyState(
-                    image: "cart.fill",
-                    title: "Carrinho Vazio",
-                    description: "Adicione produtos ao seu carrinho"
+                    image: "cart.badge.questionmark",
+                    title: String(localized: "Your cart is empty!"),
+                    description: String(localized: "Add an item to your cart.")
                 )
             } else {
                 VStack {
@@ -52,7 +52,7 @@ struct CartView: View {
                             Spacer()
                             
                             Text(viewModel.totalSum.formatted(
-                                .currency(code: "BRL")
+                                .currency(code: Locale.current.currency?.identifier ?? "USD")
                                 .precision(.fractionLength(2))
                             ))
                             .font(.headline)

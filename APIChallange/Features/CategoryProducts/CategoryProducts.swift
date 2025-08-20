@@ -36,7 +36,7 @@ struct CategoryProducts: View {
                 }
             }
         }
-        .navigationTitle(viewModel.category.rawValue)
+        .navigationTitle(viewModel.category.stringLocalized)
         .navigationBarTitleDisplayMode(.inline)
         .task {
             favoriteViewModel.loadFavoriteProducts(allProducts: viewModel.filteredProducts)

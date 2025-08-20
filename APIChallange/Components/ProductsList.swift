@@ -34,7 +34,10 @@ struct ProductsList: View {
                         .font(.system(.footnote, weight: .regular))
                         .lineLimit(2)
                     
-                    Text("US$ \(product.price.description)")
+                    Text(product.price.formatted(
+                        .currency(code: Locale.current.currency?.identifier ?? "USD")
+                        .precision(.fractionLength(2))
+                    ))
                         .font(.system(.headline, weight: .bold))
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)

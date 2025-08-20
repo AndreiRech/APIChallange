@@ -19,7 +19,7 @@ struct Categories: View {
                             VStack(spacing: 8) {
                                 DefaultImage(imageName: category.imageName)
                                 
-                                Text(category.rawValue)
+                                Text(category.stringLocalized)
                                     .font(.subheadline)
                             }
                             .frame(width: 84, height: 112)

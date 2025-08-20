@@ -59,7 +59,10 @@ struct ProductCardLarge: View {
                         .font(.subheadline)
                         .lineLimit(2)
                     
-                    Text("US$ \(product.price.description)")
+                    Text(product.price.formatted(
+                        .currency(code: Locale.current.currency?.identifier ?? "USD")
+                        .precision(.fractionLength(2))
+                    ))
                         .font(.headline)
                 }
                 .frame(maxHeight: .infinity)

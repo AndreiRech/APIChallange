@@ -16,9 +16,9 @@ struct FavoriteView: View {
         NavigationStack {
             if viewModel.favoriteProducts.isEmpty {
                 EmptyState(
-                    image: "heart.fill",
-                    title: "Favoritos",
-                    description: "Seus produtos favoritos aparecerão aqui"
+                    image: "heart.slash",
+                    title: String(localized: "No favorites yet!"),
+                    description: String(localized: "Favorite an item and it will show up here.")
                 )
             } else {
                 ScrollView {

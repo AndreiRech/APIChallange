@@ -61,7 +61,10 @@ struct ProductDetails: View {
                                         .font(.system(.title3, weight: .regular))
                                         .foregroundStyle(Color(.label))
                                     
-                                    Text("US$ \(product.price.description)")
+                                    Text(product.price.formatted(
+                                        .currency(code: Locale.current.currency?.identifier ?? "USD")
+                                        .precision(.fractionLength(2))
+                                    ))
                                         .font(.system(.title2, weight: .bold))
                                         .foregroundStyle(Color(.label))
                                 }

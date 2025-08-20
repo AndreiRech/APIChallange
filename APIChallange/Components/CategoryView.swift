@@ -11,7 +11,7 @@ struct CategoryView: View {
     
     var body: some View {
         HStack(alignment: .center) {
-            Text(category.rawValue)
+            Text(category.stringLocalized)
                 .listRowInsets(EdgeInsets())
             
             Spacer()

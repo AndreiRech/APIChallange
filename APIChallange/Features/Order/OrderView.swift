@@ -15,9 +15,9 @@ struct OrderView: View {
         NavigationStack {
             if viewModel.orderProducts.isEmpty {
                 EmptyState(
-                    image: "bag.fill",
-                    title: "Orders",
-                    description: "Seus produtos ordenados aparecerão aqui"
+                    image: "bag.badge.questionmark",
+                    title: String(localized: "No orders yet!"),
+                    description: String(localized: "Buy an item and it will show up here.")
                 )
             } else {
                 ScrollView {

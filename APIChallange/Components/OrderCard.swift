@@ -35,7 +35,7 @@ struct OrderCard: View {
                         .lineLimit(1)
                     
                     Text(product.price.formatted(
-                        .currency(code: "BRL")
+                        .currency(code: Locale.current.currency?.identifier ?? "USD")
                         .precision(.fractionLength(2))
                     ))
                     .font(.system(.headline, weight: .bold))

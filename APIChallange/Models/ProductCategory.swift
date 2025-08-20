@@ -87,4 +87,57 @@ enum ProductCategory: String, Codable, Identifiable, CaseIterable {
             return "watch.analog"
         }
     }
+    
+    var stringLocalized: String {
+        switch self {
+        case .beauty:
+            return String(localized: "Beauty")
+        case .fragrances:
+            return String(localized: "Fragrances")
+        case .furniture:
+            return String(localized: "Furniture")
+        case .groceries:
+            return String(localized: "Groceries")
+        case .homeDecoration:
+            return String(localized: "Home Decoration")
+        case .kitchenAccessories:
+            return String(localized: "Kitchen Accessories")
+        case .laptop:
+            return String(localized: "Laptops")
+        case .mensShirts:
+            return String(localized: "Mens Shirts")
+        case .mensShoes:
+            return String(localized: "Mens Shoes")
+        case .mensWatches:
+            return String(localized: "Mens Watches")
+        case .mobileAccessories:
+            return String(localized: "Mobile Accessories")
+        case .motorcycle:
+            return String(localized: "Motorcycle")
+        case .skinCare:
+            return String(localized: "Skin Care")
+        case .smartphones:
+            return String(localized: "Smartphones")
+        case .sportsAccessories:
+            return String(localized: "Sports Accessories")
+        case .sunglasses:
+            return String(localized: "Sunglasses")
+        case .tablets:
+            return String(localized: "Tablets")
+        case .tops:
+            return String(localized: "Tops")
+        case .vehicle:
+            return String(localized: "Vehicle")
+        case .womensBags:
+            return String(localized: "Womens Bags")
+        case .womensDresses:
+            return String(localized: "Womens Dresses")
+        case .womensJewellery:
+            return String(localized: "Womens Jewellery")
+        case .womensShoes:
+            return String(localized: "Womens Shoes")
+        case .womensWatches:
+            return String(localized: "Womens Watches")
+        }
+    }
 }

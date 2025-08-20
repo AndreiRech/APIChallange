@@ -31,6 +31,3 @@ struct EmptyState: View {
     }
 }
 
-#Preview {
-    EmptyState(image: "heart.slash", title: "Your cart is empty!", description: "Add an item to your cart.")
-}

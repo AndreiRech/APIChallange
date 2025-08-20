@@ -30,7 +30,7 @@ struct ProductCard: View {
                     if isFavorite {
                         productViewModel.removeFromFavorite(product: product)
                     } else {
-                        productViewModel.addToFavorite(product: product)                        
+                        productViewModel.addToFavorite(product: product)
                     }
                     isFavorite.toggle()
                 } label: {
@@ -53,8 +53,11 @@ struct ProductCard: View {
                     .font(.subheadline)
                     .lineLimit(2)
                 
-                Text("US$ \(product.price.description)")
-                    .font(.headline)
+                Text(product.price.formatted(
+                    .currency(code: Locale.current.currency?.identifier ?? "USD")
+                    .precision(.fractionLength(2))
+                ))
+                .font(.headline)
             }
             .frame(maxHeight: .infinity)
             .frame(maxWidth: .infinity, alignment: .leading)

@@ -26,6 +26,3 @@ struct DefaultImage: View {
     }
 }
 
-#Preview {
-    DefaultImage(imageName: ProductCategory.allCases.first!.rawValue)
-}
