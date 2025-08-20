@@ -60,8 +60,8 @@ struct Home: View {
             }
         }
         .task {
-            favoriteViewModel.loadFavoriteProducts(allProducts: viewModel.products)
             await viewModel.getProducts()
+            favoriteViewModel.loadFavoriteProducts(allProducts: viewModel.products)
             await viewModel.getProduct(by: 1)
         }
         .sheet(item: $selectedProduct) { product in
