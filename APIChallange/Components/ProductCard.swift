@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProductCard: View {
+    let productViewModel: ProductViewModel = .init(service: ProductService(), database: .shared)
     @State var isFavorite: Bool
     var product: Product
     
@@ -27,7 +28,7 @@ struct ProductCard: View {
             .overlay(
                 Button {
                     isFavorite.toggle()
-                    
+                    productViewModel.addToFavorite(product: product)
                 } label: {
                     Image(systemName: isFavorite ? "heart.fill" : "heart")
                         .resizable()

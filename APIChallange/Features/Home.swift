@@ -9,8 +9,13 @@ import SwiftUI
 
 struct Home: View {
     let viewModel: ProductViewModel
+    let favoriteViewModel: FavoriteViewModel = .init(database: .shared)
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     @State var selectedProduct: Product?
+    
+    private func isFavorite(_ productID: Int) -> Bool {
+        favoriteViewModel.filteredProducts.contains { $0.id == productID }
+    }
     
     var body: some View {
         NavigationStack {
@@ -38,7 +43,7 @@ struct Home: View {
                         
                         LazyVGrid(columns: columns, spacing: 8) {
                             ForEach(viewModel.products) { product in
-                                ProductCard(isFavorite: false, product: product)
+                                ProductCard(isFavorite: isFavorite(product.id), product: product)
                                     .onTapGesture {
                                         selectedProduct = product
                                     }
@@ -55,6 +60,7 @@ struct Home: View {
             }
         }
         .task {
+            favoriteViewModel.loadFavoriteProducts(allProducts: viewModel.products)
             await viewModel.getProducts()
             await viewModel.getProduct(by: 1)
         }
