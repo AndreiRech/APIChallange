@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CartView: View {
-    @StateObject var viewModel = CartViewModel(database: .shared)
+    @StateObject var viewModel = CartViewModel(database: SwiftDataService.shared)
     var productViewModel: ProductViewModelProtocol
     @State var changed: Bool = false
     

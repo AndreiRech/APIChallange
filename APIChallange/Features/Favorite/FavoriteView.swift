@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoriteView: View {
-    @StateObject private var viewModel = FavoriteViewModel(database: .shared)
+    @StateObject private var viewModel = FavoriteViewModel(database: SwiftDataService.shared)
     var productViewModel: ProductViewModelProtocol
     @State var selectedProduct: Product?
     
@@ -44,7 +44,7 @@ struct FavoriteView: View {
             viewModel.loadFavoriteProducts(allProducts: productViewModel.products)
         }
         .sheet(item: $selectedProduct) { product in
-            ProductDetails(viewModel: ProductViewModel(service: ProductService(), database: .shared), productID: product.id, isFavorite: viewModel.isFavorite(product.id))
+            ProductDetails(viewModel: ProductViewModel(service: ProductService(), database: SwiftDataService.shared), productID: product.id, isFavorite: viewModel.isFavorite(product.id))
                 .presentationDragIndicator(.visible)
         }
     }

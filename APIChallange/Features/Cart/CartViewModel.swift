@@ -14,9 +14,9 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
     var errorMessage: String?
     var totalSum: Double = 0.0
     
-    private let database: SwiftDataService
+    private let database: SwiftDataServiceProtocol
     
-    init(database: SwiftDataService) {
+    init(database: SwiftDataServiceProtocol) {
         self.database = database
     }
     

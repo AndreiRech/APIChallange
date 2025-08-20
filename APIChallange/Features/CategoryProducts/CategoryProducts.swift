@@ -21,7 +21,7 @@ struct CategoryProducts: View {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 8) {
                         ForEach(viewModel.filteredProducts) { product in
-                            ProductCard(productViewModel: ProductViewModel(service: ProductService(), database: .shared), isFavorite: favoriteViewModel.isFavorite(product.id), product: product)
+                            ProductCard(productViewModel: ProductViewModel(service: ProductService(), database: SwiftDataService.shared), isFavorite: favoriteViewModel.isFavorite(product.id), product: product)
                                 .onTapGesture {
                                     selectedProduct = product
                                 }
@@ -43,7 +43,7 @@ struct CategoryProducts: View {
             await viewModel.loadProducts()
         }
         .sheet(item: $selectedProduct) { product in
-            ProductDetails(viewModel: ProductViewModel(service: ProductService(), database: .shared), productID: product.id, isFavorite: favoriteViewModel.isFavorite(product.id))
+            ProductDetails(viewModel: ProductViewModel(service: ProductService(), database: SwiftDataService.shared), productID: product.id, isFavorite: favoriteViewModel.isFavorite(product.id))
                 .presentationDragIndicator(.visible)
         }
     }

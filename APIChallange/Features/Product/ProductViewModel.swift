@@ -15,9 +15,9 @@ class ProductViewModel: ProductViewModelProtocol, ObservableObject {
     var errorMessage: String?
     
     private let service: ProductsServiceProtocol
-    private let database: SwiftDataService
+    private let database: SwiftDataServiceProtocol
    
-    init(service: ProductsServiceProtocol, database: SwiftDataService) {
+    init(service: ProductsServiceProtocol, database: SwiftDataServiceProtocol) {
         self.service = service
         self.database = database
     }

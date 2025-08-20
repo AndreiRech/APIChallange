@@ -12,9 +12,9 @@ class FavoriteViewModel: FavoriteViewModelProtocol, ObservableObject {
     var isLoading: Bool = false
     var errorMessage: String?
     
-    private let database: SwiftDataService
+    private let database: SwiftDataServiceProtocol
     
-    init(database: SwiftDataService) {
+    init(database: SwiftDataServiceProtocol) {
         self.database = database
     }
     

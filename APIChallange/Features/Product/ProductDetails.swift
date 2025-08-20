@@ -12,7 +12,7 @@ struct ProductDetails: View {
     var viewModel: ProductViewModelProtocol
     let productID: Int
     @State var isFavorite: Bool
-
+    
     var body: some View {
         NavigationStack {
             if viewModel.isLoading {
@@ -46,18 +46,18 @@ struct ProductDetails: View {
                                             .resizable()
                                             .foregroundStyle(Color(.label))
                                     }
-                                    .padding(8)
-                                    .frame(width: 38, height: 38)
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .foregroundStyle(Color(.tertiarySystemFill))
-                                    ),
+                                        .padding(8)
+                                        .frame(width: 38, height: 38)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .foregroundStyle(Color(.tertiarySystemFill))
+                                        ),
                                     alignment: .topTrailing
                                 )
                                 .accessibilityLabel(isFavorite ? "Remove from Favorites" : "Add to Favorites")
                                 .accessibilityHint("Touch to toggle favorite status")
                                 .cornerRadius(8)
-
+                                
                                 VStack (alignment: .leading, spacing: 4) {
                                     Text(product.title)
                                         .font(.system(.title3, weight: .regular))
@@ -67,16 +67,16 @@ struct ProductDetails: View {
                                         .currency(code: Locale.current.currency?.identifier ?? "USD")
                                         .precision(.fractionLength(2))
                                     ))
-                                        .font(.system(.title2, weight: .bold))
-                                        .foregroundStyle(Color(.label))
+                                    .font(.system(.title2, weight: .bold))
+                                    .foregroundStyle(Color(.label))
                                 }
-
+                                
                                 Text(product.description)
                                     .font(.system(.body, weight: .regular))
                                     .foregroundStyle(Color(.secondaryLabel))
                             }
                         }
-
+                        
                         Button {
                             viewModel.addToCart(product: product)
                             dismiss()
@@ -103,6 +103,12 @@ struct ProductDetails: View {
         }
         .task {
             await viewModel.getProduct(by: productID)
+        }
+        .onDisappear {
+            Task {
+                await viewModel.getProduct(by: 1)
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {}
         }
     }
 }

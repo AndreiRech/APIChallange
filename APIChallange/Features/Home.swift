@@ -23,7 +23,7 @@ struct Home: View {
                         Text("Deals of the day")
                             .font(.system(.title2, weight: .bold))
                         if let product = viewModel.product {
-                            ProductCardLarge(productViewModel: ProductViewModel(service: ProductService(), database: .shared), favoriteViewModel: FavoriteViewModel(database: .shared),
+                            ProductCardLarge(productViewModel: ProductViewModel(service: ProductService(), database: SwiftDataService.shared), favoriteViewModel: FavoriteViewModel(database: SwiftDataService.shared),
                                 product: product,
                                 isFavorite: favoriteViewModel.isFavorite(product.id))
                             .onTapGesture {
@@ -41,7 +41,7 @@ struct Home: View {
                         
                         LazyVGrid(columns: columns, spacing: 8) {
                             ForEach(viewModel.products) { product in
-                                ProductCard(productViewModel: ProductViewModel(service: ProductService(), database: .shared), isFavorite: favoriteViewModel.isFavorite(product.id), product: product)
+                                ProductCard(productViewModel: ProductViewModel(service: ProductService(), database: SwiftDataService.shared), isFavorite: favoriteViewModel.isFavorite(product.id), product: product)
                                     .onTapGesture {
                                         selectedProduct = product
                                     }

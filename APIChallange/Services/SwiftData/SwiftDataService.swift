@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-class SwiftDataService {
+class SwiftDataService: SwiftDataServiceProtocol {
     private let modelContainer: ModelContainer
     private let modelContext: ModelContext
     

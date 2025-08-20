@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OrderView: View {
-    @StateObject private var viewModel = OrderViewModel(database: .shared)
+    @StateObject private var viewModel = OrderViewModel(database: SwiftDataService.shared)
     var productViewModel: ProductViewModelProtocol
     
     var body: some View {
