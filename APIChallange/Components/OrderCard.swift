@@ -22,6 +22,7 @@ struct OrderCard: View {
             } placeholder: {
                 DefaultImage(imageName: "bag.fill", large: false)
             }
+            .accessibilityHidden(true)
             .frame(width: 80, height: 80)
             .padding(8)
             
@@ -47,5 +48,7 @@ struct OrderCard: View {
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(Color(.secondarySystemBackground))
         )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Order: \(product.description), shipping info: \(product.shippingInformation), price: \(product.price.formatted(.currency(code: "USD")))")
     }
 }

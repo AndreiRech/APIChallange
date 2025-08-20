@@ -19,6 +19,7 @@ struct EmptyState: View {
                 .scaledToFit()
                 .frame(width: 65, height: 69)
                 .foregroundStyle(Color(.systemGray2))
+                .accessibilityHidden(true)
             
             VStack(spacing: 16) {
                 Text(title)
@@ -28,6 +29,8 @@ struct EmptyState: View {
                     .foregroundStyle(.secondary)
             }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(title). \(description)")
     }
 }
 

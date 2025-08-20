@@ -23,6 +23,7 @@ struct DefaultImage: View {
                     .foregroundStyle(Color(.quaternarySystemFill))
             )
             .foregroundStyle(Color(.secondarySystemFill))
+            .accessibilityHidden(true)
     }
 }
 

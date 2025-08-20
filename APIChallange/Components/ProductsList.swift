@@ -13,7 +13,7 @@ struct ProductsList: View {
     @State var quantity: Int
     var onQuantityChange: ((Int) -> Void)?
     var onAddToCart: (() -> Void)?
-        
+    
     var body: some View {
         HStack {
             AsyncImage(url: URL(string: product.thumbnail)) { image in
@@ -27,6 +27,7 @@ struct ProductsList: View {
                 DefaultImage(imageName: "bag.fill", large: false)
             }
             .frame(width: 80, height: 80)
+            .accessibilityHidden(true)
             
             HStack(spacing: 16){
                 VStack (alignment: .leading, spacing: 4) {
@@ -38,10 +39,12 @@ struct ProductsList: View {
                         .currency(code: Locale.current.currency?.identifier ?? "USD")
                         .precision(.fractionLength(2))
                     ))
-                        .font(.system(.headline, weight: .bold))
+                    .font(.system(.headline, weight: .bold))
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .frame(height: 62)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("\(product.title), price: \(product.price.formatted(.currency(code: "USD")))")
                 
                 if hasPicker {
                     HStack(spacing: 8) {
@@ -62,6 +65,7 @@ struct ProductsList: View {
                                         .foregroundStyle(Color(.tertiarySystemFill))
                                 )
                         }
+                        .accessibilityHidden(true)
                         
                         Text("\(quantity)")
                             .font(.system(.body, weight: .regular))
@@ -79,6 +83,7 @@ struct ProductsList: View {
                                         .foregroundStyle(Color(.tertiarySystemFill))
                                 )
                         }
+                        .accessibilityHidden(true)
                     }
                 } else {
                     Button {
@@ -92,9 +97,10 @@ struct ProductsList: View {
                                     .foregroundStyle(Color(.tertiarySystemFill))
                             )
                     }
+                    .accessibilityLabel("Add \(product.title) to cart")
                 }
             }
-                .padding(.leading, 16)
+            .padding(.leading, 16)
         }
         .padding(.leading, 8)
         .padding(.trailing, 16)

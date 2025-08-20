@@ -52,6 +52,8 @@ struct ProductCardLarge: View {
                             RoundedRectangle(cornerRadius: 8)
                                 .foregroundStyle(Color(.tertiarySystemFill))
                         )
+                        .accessibilityLabel(isFavorite ? "Remove from Favorites" : "Add to Favorites")
+                        .accessibilityHint("Touch to toggle favorite status")
                 }
 
                 VStack(alignment: .leading, spacing: 4) {
@@ -76,6 +78,10 @@ struct ProductCardLarge: View {
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(Color(.secondarySystemBackground))
         )
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(product.title), price: \(product.price.formatted(.currency(code: "USD")))")
+        .accessibilityHint("Touch to see the product details")
+        .accessibilityAddTraits(.isButton)
     }
 }
 

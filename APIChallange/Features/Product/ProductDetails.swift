@@ -54,6 +54,8 @@ struct ProductDetails: View {
                                     ),
                                     alignment: .topTrailing
                                 )
+                                .accessibilityLabel(isFavorite ? "Remove from Favorites" : "Add to Favorites")
+                                .accessibilityHint("Touch to toggle favorite status")
                                 .cornerRadius(8)
 
                                 VStack (alignment: .leading, spacing: 4) {

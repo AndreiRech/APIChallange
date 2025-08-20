@@ -19,7 +19,6 @@ class SwiftDataService {
     init() {
         self.modelContainer = try! ModelContainer(
             for: Favorite.self, Cart.self, Order.self,
-//            configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
         self.modelContext = modelContainer.mainContext
     }

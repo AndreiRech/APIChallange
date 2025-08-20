@@ -1,8 +1,45 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@, price: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, price: %2$@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, preço: %2$@"
+          }
+        }
+      }
+    },
+    "%@. %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@. %2$@"
+          }
+        }
+      },
+      "shouldTranslate" : false
+    },
     "%lld" : {
-
+      "shouldTranslate" : false
+    },
+    "Add %@ to cart" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicionar %@ ao carrinho"
+          }
+        }
+      }
     },
     "Add an item to your cart." : {
       "localizations" : {
@@ -20,6 +57,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adicionar ao Carrinho"
+          }
+        }
+      }
+    },
+    "Add to Favorites" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicionar aos Favoritos"
           }
         }
       }
@@ -254,12 +301,49 @@
         }
       }
     },
+    "Order: %@, shipping info: %@, price: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Order: %1$@, shipping info: %2$@, price: %3$@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pedido: %1$@, enviado com %2$@, preço: %3$@"
+          }
+        }
+      }
+    },
     "Orders" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pedidos"
+          }
+        }
+      }
+    },
+    "Product image not available" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imagem do Produto não disponível"
+          }
+        }
+      }
+    },
+    "Remove from Favorites" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remover dos Favoritos"
           }
         }
       }
@@ -350,6 +434,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Total:"
+          }
+        }
+      }
+    },
+    "Touch to see the product details" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toque para ver os detalhes do produto"
+          }
+        }
+      }
+    },
+    "Touch to see the product details from this category" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toque para ver os produtos desta categoria"
+          }
+        }
+      }
+    },
+    "Touch to toggle favorite status" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toque para atualizar seus favoritos"
           }
         }
       }

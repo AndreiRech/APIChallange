@@ -21,6 +21,10 @@ struct CategoryView: View {
                 .frame(width: 12, height: 16)
         }
         .padding(.vertical, 19)
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isButton)
+        .accessibilityLabel(category.stringLocalized)
+        .accessibilityHint("Touch to see the product details from this category")
     }
 }
 
