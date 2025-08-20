@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ProductDetails: View {
     @Environment(\.dismiss) var dismiss
-    @State private var isFavorite = false
     var viewModel: ProductViewModelProtocol
     let productID: Int
+    @State var isFavorite: Bool
 
     var body: some View {
         NavigationStack {
@@ -35,7 +35,11 @@ struct ProductDetails: View {
                                 .frame(width: 361, height: 361)
                                 .overlay(
                                     Button {
-                                        viewModel.addToFavorite(product: product)
+                                        if isFavorite {
+                                            viewModel.removeFromFavorite(product: product)
+                                        } else {
+                                            viewModel.addToFavorite(product: product)
+                                        }
                                         isFavorite.toggle()
                                     } label: {
                                         Image(systemName: isFavorite ? "heart.fill" : "heart")

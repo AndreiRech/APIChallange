@@ -48,6 +48,10 @@ class ProductViewModel: ProductViewModelProtocol, ObservableObject {
         database.addToFavorite(product.id)
     }
     
+    func removeFromFavorite(product: Product) {
+        database.removeFavoriteProduct(product.id)
+    }
+    
     func addToCart(product: Product) {
         database.addToCart(product.id, 1)
     }

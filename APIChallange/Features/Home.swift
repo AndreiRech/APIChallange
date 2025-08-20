@@ -13,10 +13,6 @@ struct Home: View {
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     @State var selectedProduct: Product?
     
-    private func isFavorite(_ productID: Int) -> Bool {
-        favoriteViewModel.filteredProducts.contains { $0.id == productID }
-    }
-    
     var body: some View {
         NavigationStack {
             if viewModel.isLoading {
@@ -27,7 +23,7 @@ struct Home: View {
                         Text("Deals of the day")
                             .font(.system(.title2, weight: .bold))
                         if let product = viewModel.product {
-                            ProductCardLarge(product: product)
+                            ProductCardLarge(product: product, isFavorite: favoriteViewModel.isFavorite(product.id))
                                 .onTapGesture {
                                     selectedProduct = product
                                 }
@@ -43,7 +39,7 @@ struct Home: View {
                         
                         LazyVGrid(columns: columns, spacing: 8) {
                             ForEach(viewModel.products) { product in
-                                ProductCard(isFavorite: isFavorite(product.id), product: product)
+                                ProductCard(isFavorite: favoriteViewModel.isFavorite(product.id), product: product)
                                     .onTapGesture {
                                         selectedProduct = product
                                     }
@@ -62,11 +58,11 @@ struct Home: View {
         .task {
             await viewModel.getProducts()
             favoriteViewModel.loadFavoriteProducts(allProducts: viewModel.products)
-            await viewModel.getProduct(by: 1)
+            await viewModel.getProduct(by: 20)
         }
         .sheet(item: $selectedProduct) { product in
-            ProductDetails(viewModel: viewModel, productID: product.id)
-                .presentationDragIndicator(.visible)
+            ProductDetails(viewModel: viewModel, productID: product.id, isFavorite: favoriteViewModel.isFavorite(product.id))
+//                .presentationDragIndicator(.visible)
         }
     }
 }

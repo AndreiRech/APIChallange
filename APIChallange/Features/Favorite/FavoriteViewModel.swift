@@ -33,4 +33,8 @@ class FavoriteViewModel: FavoriteViewModelProtocol, ObservableObject {
             return favoriteProducts.filter { $0.title.lowercased().contains(searchText.lowercased()) }
         }
     }
+    
+    func isFavorite(_ productID: Int) -> Bool {
+        filteredProducts.contains { $0.id == productID }
+    }
 }

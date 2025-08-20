@@ -27,8 +27,12 @@ struct ProductCard: View {
             .frame(width: 160, height: 160)
             .overlay(
                 Button {
+                    if isFavorite {
+                        productViewModel.removeFromFavorite(product: product)
+                    } else {
+                        productViewModel.addToFavorite(product: product)                        
+                    }
                     isFavorite.toggle()
-                    productViewModel.addToFavorite(product: product)
                 } label: {
                     Image(systemName: isFavorite ? "heart.fill" : "heart")
                         .resizable()

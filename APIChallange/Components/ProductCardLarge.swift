@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct ProductCardLarge: View {
-    @State var isFavorited: Bool = false
+    let productViewModel: ProductViewModel = .init(service: ProductService(), database: .shared)
+    let favoriteViewModel: FavoriteViewModel = .init(database: .shared)
     var product: Product
+    @State var isFavorite: Bool = false
     
     var body: some View {
         HStack(spacing: 16) {
@@ -33,9 +35,14 @@ struct ProductCardLarge: View {
                     Spacer()
                     
                     Button {
-                        isFavorited.toggle()
+                        if isFavorite {
+                            productViewModel.removeFromFavorite(product: product)
+                        } else {
+                            productViewModel.addToFavorite(product: product)
+                        }
+                        isFavorite.toggle()
                     } label: {
-                        Image(systemName: isFavorited ? "heart.fill" : "heart")
+                        Image(systemName: isFavorite ? "heart.fill" : "heart")
                             .resizable()
                             .foregroundStyle(Color(.label))
                     }

@@ -20,5 +20,5 @@ protocol ProductViewModelProtocol {
     func addToCart(product: Product)
     func addToOrder(product: Product)
     
-    
+    func removeFromFavorite(product: Product)
 }

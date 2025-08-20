@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CategoryProducts: View {
     @State var viewModel: CategoryProductsViewModelProtocol
+    let favoriteViewModel: FavoriteViewModel = .init(database: .shared)
     @State var selectedProduct: Product?
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
@@ -20,7 +21,7 @@ struct CategoryProducts: View {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 8) {
                         ForEach(viewModel.filteredProducts) { product in
-                            ProductCard(isFavorite: false, product: product)
+                            ProductCard(isFavorite: favoriteViewModel.isFavorite(product.id), product: product)
                                 .onTapGesture {
                                     selectedProduct = product
                                 }
@@ -38,10 +39,11 @@ struct CategoryProducts: View {
         .navigationTitle(viewModel.category.rawValue)
         .navigationBarTitleDisplayMode(.inline)
         .task {
+            favoriteViewModel.loadFavoriteProducts(allProducts: viewModel.filteredProducts)
             await viewModel.loadProducts()
         }
         .sheet(item: $selectedProduct) { product in
-            ProductDetails(viewModel: ProductViewModel(service: ProductService(), database: .shared), productID: product.id)
+            ProductDetails(viewModel: ProductViewModel(service: ProductService(), database: .shared), productID: product.id, isFavorite: favoriteViewModel.isFavorite(product.id))
                 .presentationDragIndicator(.visible)
         }
     }

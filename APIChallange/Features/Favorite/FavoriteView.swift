@@ -44,7 +44,7 @@ struct FavoriteView: View {
             viewModel.loadFavoriteProducts(allProducts: productViewModel.products)
         }
         .sheet(item: $selectedProduct) { product in
-            ProductDetails(viewModel: ProductViewModel(service: ProductService(), database: .shared), productID: product.id)
+            ProductDetails(viewModel: ProductViewModel(service: ProductService(), database: .shared), productID: product.id, isFavorite: viewModel.isFavorite(product.id))
                 .presentationDragIndicator(.visible)
         }
     }
