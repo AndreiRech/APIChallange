@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ProductCardLarge: View {
-    let productViewModel: ProductViewModel = .init(service: ProductService(), database: .shared)
-    let favoriteViewModel: FavoriteViewModel = .init(database: .shared)
+    let productViewModel: ProductViewModelProtocol
+    let favoriteViewModel: FavoriteViewModelProtocol
     var product: Product
-    @State var isFavorite: Bool = false
+    @State var isFavorite: Bool
     
     var body: some View {
         HStack(spacing: 16) {

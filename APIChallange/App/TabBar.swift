@@ -11,7 +11,7 @@ struct TabBar: View {
     var body: some View {
         TabView {
             Tab("Home", systemImage: "house.fill") {
-                Home(viewModel: ProductViewModel(service: ProductService(), database: .shared))
+                Home(viewModel: ProductViewModel(service: ProductService(), database: .shared), favoriteViewModel: FavoriteViewModel(database: .shared))
             }
             
             Tab("Categories", systemImage: "square.grid.2x2.fill") {

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategoryProducts: View {
     @State var viewModel: CategoryProductsViewModelProtocol
-    let favoriteViewModel: FavoriteViewModel = .init(database: .shared)
+    let favoriteViewModel: FavoriteViewModelProtocol
     @State var selectedProduct: Product?
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
@@ -21,7 +21,7 @@ struct CategoryProducts: View {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 8) {
                         ForEach(viewModel.filteredProducts) { product in
-                            ProductCard(isFavorite: favoriteViewModel.isFavorite(product.id), product: product)
+                            ProductCard(productViewModel: ProductViewModel(service: ProductService(), database: .shared), isFavorite: favoriteViewModel.isFavorite(product.id), product: product)
                                 .onTapGesture {
                                     selectedProduct = product
                                 }

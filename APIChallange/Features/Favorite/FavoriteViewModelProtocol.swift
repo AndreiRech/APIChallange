@@ -8,4 +8,5 @@ protocol FavoriteViewModelProtocol {
     var filteredProducts: [Product] { get }
     
     func loadFavoriteProducts(allProducts: [Product])
+    func isFavorite(_ productID: Int) -> Bool
 }

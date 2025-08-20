@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Home: View {
     let viewModel: ProductViewModel
-    let favoriteViewModel: FavoriteViewModel = .init(database: .shared)
+    let favoriteViewModel: FavoriteViewModelProtocol
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     @State var selectedProduct: Product?
     
@@ -23,10 +23,12 @@ struct Home: View {
                         Text("Deals of the day")
                             .font(.system(.title2, weight: .bold))
                         if let product = viewModel.product {
-                            ProductCardLarge(product: product, isFavorite: favoriteViewModel.isFavorite(product.id))
-                                .onTapGesture {
-                                    selectedProduct = product
-                                }
+                            ProductCardLarge(productViewModel: ProductViewModel(service: ProductService(), database: .shared), favoriteViewModel: FavoriteViewModel(database: .shared),
+                                product: product,
+                                isFavorite: favoriteViewModel.isFavorite(product.id))
+                            .onTapGesture {
+                                selectedProduct = product
+                            }
                         }
                     }
                     .padding(.horizontal, 16)
@@ -39,7 +41,7 @@ struct Home: View {
                         
                         LazyVGrid(columns: columns, spacing: 8) {
                             ForEach(viewModel.products) { product in
-                                ProductCard(isFavorite: favoriteViewModel.isFavorite(product.id), product: product)
+                                ProductCard(productViewModel: ProductViewModel(service: ProductService(), database: .shared), isFavorite: favoriteViewModel.isFavorite(product.id), product: product)
                                     .onTapGesture {
                                         selectedProduct = product
                                     }
@@ -58,11 +60,10 @@ struct Home: View {
         .task {
             await viewModel.getProducts()
             favoriteViewModel.loadFavoriteProducts(allProducts: viewModel.products)
-            await viewModel.getProduct(by: 20)
+            await viewModel.getProduct(by: 1)
         }
         .sheet(item: $selectedProduct) { product in
             ProductDetails(viewModel: viewModel, productID: product.id, isFavorite: favoriteViewModel.isFavorite(product.id))
-//                .presentationDragIndicator(.visible)
         }
     }
 }

@@ -45,7 +45,7 @@ struct Categories: View {
         }
         .navigationTitle("Categories")
         .navigationDestination(item: $viewModel.navigateToCategory) { category in
-            CategoryProducts(viewModel: CategoryProductsViewModel(category: category, productViewModel: ProductViewModel(service: ProductService(), database: .shared)))
+            CategoryProducts(viewModel: CategoryProductsViewModel(category: category, productViewModel: ProductViewModel(service: ProductService(), database: .shared)), favoriteViewModel: FavoriteViewModel(database: .shared))
         }
     }
 }

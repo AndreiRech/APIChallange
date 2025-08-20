@@ -327,17 +327,6 @@
         }
       }
     },
-    "Product image not available" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Imagem do Produto não disponível"
-          }
-        }
-      }
-    },
     "Remove from Favorites" : {
       "localizations" : {
         "pt-BR" : {

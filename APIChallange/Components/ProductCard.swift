@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProductCard: View {
-    let productViewModel: ProductViewModel = .init(service: ProductService(), database: .shared)
+    let productViewModel: ProductViewModelProtocol
     @State var isFavorite: Bool
     var product: Product
     
