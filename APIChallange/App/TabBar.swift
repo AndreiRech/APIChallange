@@ -11,7 +11,7 @@ struct TabBar: View {
     var body: some View {
         TabView {
             Tab("Home", systemImage: "house.fill") {
-                Home(viewModel: ProductViewModel(service: ProductService(), database: SwiftDataService.shared), favoriteViewModel: FavoriteViewModel(database: SwiftDataService.shared))
+                Home(viewModel: HomeViewModel(favoriteService: FavoriteService(), productService: ProductService()))
             }
             
             Tab("Categories", systemImage: "square.grid.2x2.fill") {
@@ -21,15 +21,15 @@ struct TabBar: View {
             }
             
             Tab("Cart", systemImage: "cart.fill") {
-                CartView(productViewModel: ProductViewModel(service: ProductService(), database: SwiftDataService.shared))
+                CartView(viewModel: CartViewModel(cartService: CartService(), orderService: OrderService(), productService: ProductService()))
             }
             
             Tab("Favorites", systemImage: "heart.fill") {
-                FavoriteView(productViewModel: ProductViewModel(service: ProductService(), database: SwiftDataService.shared))
+                FavoriteView(viewModel: FavoriteViewModel(favoriteService: FavoriteService(), productService: ProductService()))
             }
             
             Tab("Orders", systemImage: "bag.fill") {
-                OrderView(productViewModel: ProductViewModel(service: ProductService(), database: SwiftDataService.shared))
+                OrderView(viewModel: OrderViewModel(orderService: OrderService(), productService: ProductService()))
             }
         }
     }

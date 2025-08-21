@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct ProductCardLarge: View {
-    let productViewModel: ProductViewModelProtocol
-    let favoriteViewModel: FavoriteViewModelProtocol
-    var product: Product
     @State var isFavorite: Bool
+    var product: Product
+    var onToggleFavorite: ((Product, Bool) -> Void)?
     
     var body: some View {
         HStack(spacing: 16) {
@@ -35,12 +34,8 @@ struct ProductCardLarge: View {
                     Spacer()
                     
                     Button {
-                        if isFavorite {
-                            productViewModel.removeFromFavorite(product: product)
-                        } else {
-                            productViewModel.addToFavorite(product: product)
-                        }
                         isFavorite.toggle()
+                        onToggleFavorite?(product, isFavorite)
                     } label: {
                         Image(systemName: isFavorite ? "heart.fill" : "heart")
                             .resizable()

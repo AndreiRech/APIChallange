@@ -7,7 +7,7 @@
 import Foundation
 
 @Observable
-class FavoriteViewModel: FavoriteViewModelProtocol, ObservableObject {
+class HomeViewModel: HomeViewModelProtocol, ObservableObject {
     private let favoriteService: FavoriteServiceProtocol
     private let productService: ProductsServiceProtocol
     
@@ -28,18 +28,8 @@ class FavoriteViewModel: FavoriteViewModelProtocol, ObservableObject {
         favoriteProducts = allProducts.filter { ids.contains($0.id) }
     }
     
-    var searchText: String = ""
-    
-    var filteredProducts: [Product] {
-        if searchText.isEmpty {
-            return favoriteProducts
-        } else {
-            return favoriteProducts.filter { $0.title.lowercased().contains(searchText.lowercased()) }
-        }
-    }
-    
     func isFavorite(_ productID: Int) -> Bool {
-        filteredProducts.contains { $0.id == productID }
+        favoriteProducts.contains { $0.id == productID }
     }
     
     func getProducts() async {
@@ -62,5 +52,13 @@ class FavoriteViewModel: FavoriteViewModelProtocol, ObservableObject {
         if let product = products.first(where: { $0.id == id }) {
             self.product = product
         }
+    }
+    
+    func addToFavorite(product: Product) {
+        favoriteService.add(product.id)
+    }
+    
+    func removeFromFavorite(product: Product) {
+        favoriteService.remove(product.id)
     }
 }

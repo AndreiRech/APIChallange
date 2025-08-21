@@ -28,6 +28,3 @@ struct CategoryView: View {
     }
 }
 
-#Preview {
-    CategoryView(category: ProductCategory.beauty)
-}

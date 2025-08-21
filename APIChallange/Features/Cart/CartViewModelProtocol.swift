@@ -18,4 +18,10 @@ protocol CartViewModelProtocol {
     func updateProductQuantity(_ productId: Int, quantity: Int)
     func getQuantity(by id: Int) -> Int
     func clearCart()
+    func calculateTotalSum()
+    
+    var product: Product? { get }
+    var products: [Product] { get }
+    func getProducts() async
+    func getProduct(by id: Int) async
 }

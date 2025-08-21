@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct OrderView: View {
-    @StateObject private var viewModel = OrderViewModel(database: SwiftDataService.shared)
-    var productViewModel: ProductViewModelProtocol
+    @State var viewModel: OrderViewModelProtocol
     
     var body: some View {
         NavigationStack {
@@ -35,8 +34,8 @@ struct OrderView: View {
             }
         }
         .task {
-            await productViewModel.getProducts()
-            viewModel.loadOrderProducts(allProducts: productViewModel.products)
+            await viewModel.getProducts()
+            viewModel.loadOrderProducts(allProducts: viewModel.products)
         }
     }
 }

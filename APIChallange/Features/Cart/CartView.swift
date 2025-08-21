@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct CartView: View {
-    @StateObject var viewModel = CartViewModel(database: SwiftDataService.shared)
-    var productViewModel: ProductViewModelProtocol
+    var viewModel: CartViewModelProtocol
     @State var changed: Bool = false
     
     var body: some View {
@@ -79,11 +78,11 @@ struct CartView: View {
             }
         }
         .task {
-            await productViewModel.getProducts()
-            viewModel.loadCartProducts(allProducts: productViewModel.products)
+            await viewModel.getProducts()
+            viewModel.loadCartProducts(allProducts: viewModel.products)
         }
         .onChange(of: changed) { _, _ in
-            viewModel.loadCartProducts(allProducts: productViewModel.products)
+            viewModel.loadCartProducts(allProducts: viewModel.products)
             viewModel.calculateTotalSum()
             changed = false
         }

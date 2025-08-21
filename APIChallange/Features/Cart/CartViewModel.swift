@@ -9,19 +9,25 @@ import Foundation
 
 @Observable
 class CartViewModel: CartViewModelProtocol, ObservableObject {
+    private let cartService: CartServiceProtocol
+    private let orderService: OrderServiceProtocol
+    private let productService: ProductsServiceProtocol
+    
     var cartProducts: [Product] = []
     var isLoading: Bool = false
     var errorMessage: String?
     var totalSum: Double = 0.0
+    var product: Product?
+    var products: [Product] = []
     
-    private let database: SwiftDataServiceProtocol
-    
-    init(database: SwiftDataServiceProtocol) {
-        self.database = database
+    init(cartService: CartServiceProtocol, orderService: OrderServiceProtocol, productService: ProductsServiceProtocol) {
+        self.cartService = cartService
+        self.orderService = orderService
+        self.productService = productService
     }
     
     func loadCartProducts(allProducts: [Product]) {
-        let storedCart = database.fetchCartProducts()
+        let storedCart = cartService.fetchCart()
         let ids = storedCart.map { $0.productId }
         cartProducts = allProducts.filter { ids.contains($0.id) }
         
@@ -31,12 +37,12 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
     }
     
     func removeProduct(_ productId: Int) {
-        database.removeCartProduct(productId)
+        cartService.remove(productId)
         calculateTotalSum()
     }
     
     func updateProductQuantity(_ productId: Int, quantity: Int) {
-        database.editQuantityProduct(productId, quantity)
+        cartService.editQuantity(productId, quantity)
         calculateTotalSum()
     }
     
@@ -49,16 +55,38 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
     }
     
     func getQuantity(by id: Int) -> Int {
-        let carts = database.fetchCartProducts()
+        let carts = cartService.fetchCart()
         return carts.first(where: { $0.productId == id })?.quantity ?? 1
     }
     
     func clearCart() {
         for product in cartProducts {
-            database.addToOrder(product.id)
-            database.removeCartProduct(product.id)
+            orderService.add(product.id)
+            cartService.remove(product.id)
         }
         cartProducts.removeAll()
         calculateTotalSum()
+    }
+    
+    func getProducts() async {
+        isLoading = true
+        
+        do {
+            products = try await productService.getProducts()
+        }  catch {
+            errorMessage = "Error to fetch products \(error.localizedDescription)"
+        }
+        
+        isLoading = false
+    }
+    
+    func getProduct(by id: Int) async {
+        if products.isEmpty {
+            await getProducts()
+        }
+        
+        if let product = products.first(where: { $0.id == id }) {
+            self.product = product
+        }
     }
 }

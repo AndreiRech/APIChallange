@@ -1,11 +1,9 @@
 import Foundation
 
-protocol FavoriteViewModelProtocol {
+protocol HomeViewModelProtocol {
     var favoriteProducts: [Product] { get }
     var isLoading: Bool { get }
     var errorMessage: String? { get }
-    var searchText: String { get set }
-    var filteredProducts: [Product] { get }
     
     func loadFavoriteProducts(allProducts: [Product])
     func isFavorite(_ productID: Int) -> Bool
@@ -14,4 +12,7 @@ protocol FavoriteViewModelProtocol {
     var products: [Product] { get }
     func getProducts() async
     func getProduct(by id: Int) async
+    
+    func addToFavorite(product: Product)
+    func removeFromFavorite(product: Product)
 }

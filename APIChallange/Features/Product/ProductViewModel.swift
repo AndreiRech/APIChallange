@@ -14,19 +14,23 @@ class ProductViewModel: ProductViewModelProtocol, ObservableObject {
     var isLoading: Bool = false
     var errorMessage: String?
     
-    private let service: ProductsServiceProtocol
-    private let database: SwiftDataServiceProtocol
+    private let productService: ProductsServiceProtocol
+    private let favoriteService: FavoriteServiceProtocol
+    private let cartService: CartServiceProtocol
+    private let orderService: OrderServiceProtocol
    
-    init(service: ProductsServiceProtocol, database: SwiftDataServiceProtocol) {
-        self.service = service
-        self.database = database
+    init(productService: ProductsServiceProtocol, favoriteService: FavoriteServiceProtocol, cartService: CartServiceProtocol, orderService: OrderServiceProtocol) {
+        self.productService = productService
+        self.favoriteService = favoriteService
+        self.cartService = cartService
+        self.orderService = orderService
     }
     
     func getProducts() async {
         isLoading = true
         
         do {
-            products = try await service.getProducts()
+            products = try await productService.getProducts()
         }  catch {
             errorMessage = "Error to fetch products \(error.localizedDescription)"
         }
@@ -45,18 +49,18 @@ class ProductViewModel: ProductViewModelProtocol, ObservableObject {
     }
     
     func addToFavorite(product: Product) {
-        database.addToFavorite(product.id)
+        favoriteService.add(product.id)
     }
     
     func removeFromFavorite(product: Product) {
-        database.removeFavoriteProduct(product.id)
+        favoriteService.remove(product.id)
     }
     
     func addToCart(product: Product) {
-        database.addToCart(product.id, 1)
+        cartService.add(product.id, 1)
     }
     
     func addToOrder(product: Product) {
-        database.addToOrder(product.id)
+        orderService.add(product.id)
     }
 }

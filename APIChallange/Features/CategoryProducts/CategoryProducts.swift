@@ -9,19 +9,24 @@ import SwiftUI
 
 struct CategoryProducts: View {
     @State var viewModel: CategoryProductsViewModelProtocol
-    let favoriteViewModel: FavoriteViewModelProtocol
     @State var selectedProduct: Product?
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
         NavigationStack {
-            if viewModel.productViewModel.isLoading {
+            if viewModel.isLoading {
                 ProgressView()
             } else {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 8) {
                         ForEach(viewModel.filteredProducts) { product in
-                            ProductCard(productViewModel: ProductViewModel(service: ProductService(), database: SwiftDataService.shared), isFavorite: favoriteViewModel.isFavorite(product.id), product: product)
+                            ProductCard(isFavorite: viewModel.isFavorite(product.id), product: product) { product, isFav in
+                                if isFav {
+                                    viewModel.addToFavorite(product: product)
+                                } else {
+                                    viewModel.removeFromFavorite(product: product)
+                                }
+                            }
                                 .onTapGesture {
                                     selectedProduct = product
                                 }
@@ -32,18 +37,18 @@ struct CategoryProducts: View {
                 .scrollIndicators(.hidden)
                 .searchable(text: $viewModel.searchText, prompt: "Search")
                 .refreshable {
-                    await viewModel.loadProducts()
+                    await viewModel.getProducts()
                 }
             }
         }
         .navigationTitle(viewModel.category.stringLocalized)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            favoriteViewModel.loadFavoriteProducts(allProducts: viewModel.filteredProducts)
-            await viewModel.loadProducts()
+            viewModel.loadFavoriteProducts(allProducts: viewModel.filteredProducts)
+            await viewModel.getProducts()
         }
         .sheet(item: $selectedProduct) { product in
-            ProductDetails(viewModel: ProductViewModel(service: ProductService(), database: SwiftDataService.shared), productID: product.id, isFavorite: favoriteViewModel.isFavorite(product.id))
+            ProductDetails(viewModel: ProductViewModel(productService: ProductService(), favoriteService: FavoriteService(), cartService: CartService(), orderService: OrderService()), productID: product.id, isFavorite: viewModel.isFavorite(product.id))
                 .presentationDragIndicator(.visible)
         }
     }
