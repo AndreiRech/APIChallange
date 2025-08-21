@@ -5,7 +5,7 @@ class MockCartService: CartServiceProtocol {
     var carts: [Cart] = []
     private var cart: Cart
     
-    init() {
+    init(carts: [Cart] = [Cart(productId: 1, quantity: 1)]) {
         self.cart = Cart(productId: 1, quantity: 1)
     }
     

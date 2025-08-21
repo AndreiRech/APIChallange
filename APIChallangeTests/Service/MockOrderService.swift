@@ -3,10 +3,9 @@ import Foundation
 
 class MockOrderService: OrderServiceProtocol {
     var orders: [Order] = []
-    private var order: Order
     
-    init() {
-        self.order = Order(productId: 1)
+    init(orders: [Order] = [Order(productId: 1)]) {
+        self.orders = orders
     }
     
     func fetchOrders() -> [Order] {

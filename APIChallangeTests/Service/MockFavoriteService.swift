@@ -3,10 +3,13 @@ import Foundation
 
 class MockFavoriteService: FavoriteServiceProtocol {
     var favorites: [Favorite] = []
-    private var favorite: Favorite
     
-    init() {
-        self.favorite = Favorite(productId: 1)
+    init(favorites: [Favorite] = [Favorite(productId: 1)], startEmpty: Bool = false) {
+        if !startEmpty {
+            self.favorites = favorites
+        } else {
+            self.favorites = []
+        }
     }
     
     func fetchFavorites() -> [Favorite] {

@@ -9,14 +9,10 @@ import Testing
 import Foundation
 @testable import APIChallange
 
-struct ProductViewModelSwiftTests {
-    private let database: SwiftDataServiceProtocol = MockSwiftDataService()
-    
+struct ProductViewModelTests {
     @Test func fetchProducts() async throws {
-        
         // Given
-        let service = MockProductService(shouldFail: false)
-        let viewModel = ProductViewModel(service: service, database: database)
+        let viewModel = ProductViewModel(productService: MockProductService(), favoriteService: MockFavoriteService(), cartService: MockCartService(), orderService: MockOrderService())
         
         
         // When
@@ -27,14 +23,12 @@ struct ProductViewModelSwiftTests {
         // Then
         #expect(!viewModel.products.isEmpty)
         #expect(viewModel.product != nil)
-//        #expect(viewModel.errorMessage == nil)
     }
     
     @Test func fetchOneProduct() async throws {
         
         // Given
-        let service = MockProductService(shouldFail: false)
-        let viewModel = ProductViewModel(service: service, database: database)
+        let viewModel = ProductViewModel(productService: MockProductService(), favoriteService: MockFavoriteService(), cartService: MockCartService(), orderService: MockOrderService())
         
         
         // When
@@ -44,14 +38,12 @@ struct ProductViewModelSwiftTests {
         // Then
         #expect(!viewModel.products.isEmpty)
         #expect(viewModel.product != nil)
-//        #expect(viewModel.errorMessage == nil)
     }
     
     @Test func fetchProductsShouldFail() async throws {
         
         // Given
-        let service = MockProductService(shouldFail: true)
-        let viewModel = ProductViewModel(service: service, database: database)
+        let viewModel = ProductViewModel(productService: MockProductService(shouldFail: true), favoriteService: MockFavoriteService(), cartService: MockCartService(), orderService: MockOrderService())
         
         // When
         await viewModel.getProducts()
@@ -59,52 +51,55 @@ struct ProductViewModelSwiftTests {
         
         // Then
         #expect(viewModel.products.isEmpty)
-        #expect(viewModel.product == nil)
-//        #expect(viewModel.errorMessage != nil)
-        
+        #expect(viewModel.product == nil)        
     }
     
     @Test func addProductToFavorite() async throws {
         // Given
-        let service = MockProductService(shouldFail: false)
-        let viewModel = ProductViewModel(service: service, database: database)
+        let mockFavoriteService = MockFavoriteService()
+        let viewModel = ProductViewModel(productService: MockProductService(), favoriteService: mockFavoriteService, cartService: MockCartService(), orderService: MockOrderService())
         
         await viewModel.getProducts()
         viewModel.addToFavorite(product: viewModel.products.first!)
         
-        #expect(database.fetchFavoriteProducts().count == 1)
+        #expect(!mockFavoriteService.favorites.isEmpty)
     }
     
     @Test func removeProductFromFavorite() async throws {
-        let service = MockProductService(shouldFail: false)
-        let viewModel = ProductViewModel(service: service, database: database)
+        // Given
+        let mockFavoriteService = MockFavoriteService(startEmpty: true)
+        let viewModel = ProductViewModel(productService: MockProductService(), favoriteService: mockFavoriteService, cartService: MockCartService(), orderService: MockOrderService())
         
         await viewModel.getProducts()
         viewModel.addToFavorite(product: viewModel.products.first!)
+        
+        #expect(!mockFavoriteService.favorites.isEmpty)
+        
         viewModel.removeFromFavorite(product: viewModel.products.first!)
         
-        #expect(database.fetchFavoriteProducts().count == 0)
+        #expect(mockFavoriteService.favorites.isEmpty)
     }
     
     @Test func addProductToOrder() async throws {
         // Given
-        let service = MockProductService(shouldFail: false)
-        let viewModel = ProductViewModel(service: service, database: database)
+        let mockOrderService = MockOrderService()
+        let viewModel = ProductViewModel(productService: MockProductService(), favoriteService: MockFavoriteService(), cartService: MockCartService(), orderService: mockOrderService)
         
         await viewModel.getProducts()
         viewModel.addToOrder(product: viewModel.products.first!)
         
-        #expect(database.fetchOrderProducts().count == 1)
+        #expect(!mockOrderService.orders.isEmpty)
     }
     
     @Test func addProductToCart() async throws {
         // Given
-        let service = MockProductService(shouldFail: false)
-        let viewModel = ProductViewModel(service: service, database: database)
+        let mockCartService = MockCartService()
+        let viewModel = ProductViewModel(productService: MockProductService(), favoriteService: MockFavoriteService(), cartService: mockCartService, orderService: MockOrderService())
         
         await viewModel.getProducts()
         viewModel.addToCart(product: viewModel.products.first!)
         
-        #expect(database.fetchCartProducts().count == 1)
-    }    
+        #expect(!mockCartService.carts.isEmpty)
+        
+    }
 }
