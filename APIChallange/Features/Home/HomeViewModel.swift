@@ -56,9 +56,11 @@ class HomeViewModel: HomeViewModelProtocol, ObservableObject {
     
     func addToFavorite(product: Product) {
         favoriteService.add(product.id)
+        favoriteProducts.append(product)
     }
     
     func removeFromFavorite(product: Product) {
         favoriteService.remove(product.id)
+        favoriteProducts.append(product)
     }
 }

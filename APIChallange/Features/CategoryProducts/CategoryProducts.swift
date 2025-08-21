@@ -44,8 +44,8 @@ struct CategoryProducts: View {
         .navigationTitle(viewModel.category.stringLocalized)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            viewModel.loadFavoriteProducts(allProducts: viewModel.filteredProducts)
             await viewModel.getProducts()
+            viewModel.loadFavoriteProducts(allProducts: viewModel.filteredProducts)
         }
         .sheet(item: $selectedProduct) { product in
             ProductDetails(viewModel: ProductViewModel(productService: ProductService(), favoriteService: FavoriteService(), cartService: CartService(), orderService: OrderService()), productID: product.id, isFavorite: viewModel.isFavorite(product.id))

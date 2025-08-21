@@ -9,9 +9,7 @@ import Testing
 import Foundation
 @testable import APIChallange
 
-struct CartViewModelSwiftTests {
-    private let database: SwiftDataServiceProtocol = MockSwiftDataService()
-    
+struct CartViewModelSwiftTests {    
     @Test func fetchCartEmpty() async throws {
         // Given
         let service = MockProductService(shouldFail: false)

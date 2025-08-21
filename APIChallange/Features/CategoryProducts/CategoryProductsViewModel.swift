@@ -42,7 +42,7 @@ class CategoryProductsViewModel: CategoryProductsViewModelProtocol {
     }
     
     func isFavorite(_ productID: Int) -> Bool {
-        filteredProducts.contains { $0.id == productID }
+        favoriteProducts.contains { $0.id == productID }
     }
     
     func getProducts() async {
@@ -69,9 +69,12 @@ class CategoryProductsViewModel: CategoryProductsViewModelProtocol {
     
     func addToFavorite(product: Product) {
         favoriteService.add(product.id)
+        favoriteProducts.append(product)
     }
-    
+
     func removeFromFavorite(product: Product) {
         favoriteService.remove(product.id)
+        favoriteProducts.removeAll { $0.id == product.id }
     }
+
 }

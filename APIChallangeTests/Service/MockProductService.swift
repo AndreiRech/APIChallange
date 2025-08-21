@@ -17,7 +17,7 @@ class MockProductService: ProductsServiceProtocol {
         self.product = Product(id: 1, title: "title", description: "description", category: "Beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image")
     }
 
-    func getProducts() async throws -> [APIChallange.Product] {
+    func getProducts() async throws -> [Product] {
         if shouldFail {
             throw NSError(domain: #function, code: 1)
         } else {
