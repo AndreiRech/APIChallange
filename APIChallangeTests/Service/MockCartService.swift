@@ -28,5 +28,17 @@ class MockCartService: CartServiceProtocol {
             carts[index].quantity = newQuantity
         }
     }
+    
+    func getQuantity(_ productId: Int) -> Int {
+        if let index = carts.firstIndex(of: Cart(productId: productId, quantity: 1)) {
+            return carts[index].quantity
+        }
+        return 0
+    }
+    
+    func clear() {
+        carts.removeAll()
+    }
+        
 }
 

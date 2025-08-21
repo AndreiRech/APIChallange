@@ -1,39 +1,39 @@
 import Foundation
 @testable import APIChallange
 
-@Observable
 class MockProductViewModel: ProductViewModelProtocol {
     var product: Product?
     var products: [Product] = []
     var isLoading: Bool = false
     var errorMessage: String?
     
+    // Variaveis suportes
+    var shouldFail: Bool = false
     var getProductsCalled = false
     var addToFavoriteCalled = false
     var removeFromFavoriteCalled = false
     var addToCartCalled = false
     var addToOrderCalled = false
     
-    init() {
+    init(shouldFail: Bool = false) {
         self.product = Product(id: 1, title: "title", description: "description", category: "Beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image")
         self.products = [Product(id: 1, title: "title", description: "description", category: "Beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"), Product(id: 2, title: "title", description: "description", category: "Beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image")]
+        self.shouldFail = shouldFail
     }
     
     func getProducts() async {
         getProductsCalled = true
-        isLoading = true
         
-        if errorMessage == nil {
-            // O array de produtos já foi definido no init
-        } else {
-            // Simula um estado de erro
-            self.products = []
+        if shouldFail {
+            products = []
+            errorMessage = "Error"
         }
         
-        isLoading = false
     }
     
     func getProduct(by id: Int) async {
+        getProductsCalled = true
+        
         if let product = products.first(where: { $0.id == id }) {
             self.product = product
         }
@@ -41,21 +41,17 @@ class MockProductViewModel: ProductViewModelProtocol {
     
     func addToFavorite(product: Product) {
         addToFavoriteCalled = true
-        print("Product \(product.id) added to favorites (mock).")
     }
     
     func removeFromFavorite(product: Product) {
         removeFromFavoriteCalled = true
-        print("Product \(product.id) removed from favorites (mock).")
     }
     
     func addToCart(product: Product) {
         addToCartCalled = true
-        print("Product \(product.id) added to cart (mock).")
     }
     
     func addToOrder(product: Product) {
         addToOrderCalled = true
-        print("Product \(product.id) added to order (mock).")
     }
 }
