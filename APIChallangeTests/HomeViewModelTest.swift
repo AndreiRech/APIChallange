@@ -104,4 +104,92 @@ struct HomeViewModelTests {
         #expect(!viewModel.products.isEmpty)
         #expect(viewModel.product != nil)
     }
+    
+    @Test func iPadTopPicksShouldReturnFirst4SortedAlphabetically() async throws {
+        // Given
+        let mockFavoriteService = MockFavoriteService()
+        
+        let productsInit = [
+            Product(id: 1, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 2, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 3, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 4, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 5, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 6, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 7, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image")
+        ]
+        
+        let mockProductService = MockProductService(products: productsInit)
+        let viewModel = HomeViewModel(favoriteService: mockFavoriteService, productService: mockProductService)
+
+        let products = try await mockProductService.getProducts()
+        viewModel.products = products
+        
+        // When
+        let topPicks = viewModel.iPadTopPicks
+        
+        // Then
+        #expect(topPicks.count == 4)
+        let sorted = products.sorted { $0.title < $1.title }
+        #expect(topPicks == Array(sorted.prefix(4)))
+    }
+
+    @Test func iPadBestSellersShouldReturnProductsAfterTop4() async throws {
+        // Given
+        let mockFavoriteService = MockFavoriteService()
+        
+        let productsInit = [
+            Product(id: 1, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 2, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 3, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 4, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 5, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 6, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 7, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image")
+        ]
+        
+        let mockProductService = MockProductService(products: productsInit)
+        let viewModel = HomeViewModel(favoriteService: mockFavoriteService, productService: mockProductService)
+
+        let products = try await mockProductService.getProducts()
+        viewModel.products = products
+        
+        // When
+        let bestSellers = viewModel.iPadBestSellers
+        
+        // Then
+        #expect(bestSellers != nil)
+        let sorted = products.sorted { $0.title > $1.title }
+        #expect(bestSellers == Array(sorted.dropFirst(4)))
+    }
+
+    @Test func iPadDealsOfTheDayShouldReturnFirst2Products() async throws {
+        // Given
+        let mockFavoriteService = MockFavoriteService()
+        
+        let productsInit = [
+            Product(id: 1, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 2, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 3, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 4, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 5, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 6, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image"),
+            Product(id: 7, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image")
+        ]
+        
+        let mockProductService = MockProductService(products: productsInit)
+        let viewModel = HomeViewModel(favoriteService: mockFavoriteService, productService: mockProductService)
+
+        let products = try await mockProductService.getProducts()
+        viewModel.products = products
+        
+        // When
+        let deals = viewModel.iPadDealsOfTheDay
+        
+        // Then
+        #expect(deals != nil)
+        #expect(deals?.count == 2)
+        #expect(deals == Array(products.prefix(2)))
+    }
+
 }

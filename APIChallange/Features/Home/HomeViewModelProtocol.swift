@@ -15,4 +15,8 @@ protocol HomeViewModelProtocol {
     
     func addToFavorite(product: Product)
     func removeFromFavorite(product: Product)
+    
+    var iPadTopPicks: [Product] { get }
+    var iPadBestSellers: [Product]? { get }
+    var iPadDealsOfTheDay: [Product]? { get }
 }

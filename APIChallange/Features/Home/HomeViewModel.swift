@@ -63,4 +63,14 @@ class HomeViewModel: HomeViewModelProtocol, ObservableObject {
         favoriteService.remove(product.id)
         favoriteProducts.removeAll { $0.id == product.id }
     }
+    
+    var iPadTopPicks: [Product] {
+        Array(products.sorted { $0.title < $1.title }.prefix(4))
+    }
+    var iPadBestSellers: [Product]? {
+        Array(products.sorted { $0.title > $1.title }.dropFirst(4))
+    }
+    var iPadDealsOfTheDay: [Product]? {
+        Array(products.prefix(2))
+    }
 }

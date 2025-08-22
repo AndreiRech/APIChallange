@@ -10,6 +10,7 @@ import SwiftUI
 struct ProductCardLarge: View {
     @State var isFavorite: Bool
     var product: Product
+    var isLarge: Bool = false
     var onToggleFavorite: ((Product, Bool) -> Void)?
     
     var body: some View {
@@ -68,7 +69,7 @@ struct ProductCardLarge: View {
             }
         }
         .padding(8)
-        .frame(height: 176)
+        .frame(height: isLarge ? 271 : 176)
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(Color(.secondarySystemBackground))
