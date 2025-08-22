@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct APIChallangeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TabBar()
         }
+        .modelContainer(for: [Cart.self, Order.self, Favorite.self])
     }
 }
