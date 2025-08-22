@@ -13,7 +13,7 @@ class MockProductService: ProductsServiceProtocol {
     private var products: [Product]
 
     init(shouldFail: Bool = false, products: [Product] = [
-        Product(id: 1, title: "title", description: "description", category: "Beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image")
+        Product(id: 1, title: "title", description: "description", category: "beauty", price: 10.5, shippingInformation: "Tomorrow", thumbnail: "image")
     ]) {
         self.shouldFail = shouldFail
         self.products = products

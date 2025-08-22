@@ -24,6 +24,20 @@ struct FavoriteViewModelTests {
         #expect(!viewModel.favoriteProducts.isEmpty)
     }
     
+    @Test func fetchFavoritesShouldFail() async throws {
+        // Given
+        let mockFavoriteService = MockFavoriteService()
+        let mockProductService = MockProductService(shouldFail: true)
+        let viewModel = FavoriteViewModel(favoriteService: mockFavoriteService, productService: mockProductService)
+        
+        // When
+        await viewModel.getProducts()
+        
+        // Then
+        #expect(viewModel.favoriteProducts.isEmpty)
+        #expect(viewModel.errorMessage != nil)
+    }
+    
     @Test func removeFavoriteProduct() async throws {
         let mockFavoriteService = MockFavoriteService()
         let mockProductService = MockProductService()

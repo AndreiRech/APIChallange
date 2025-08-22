@@ -61,6 +61,6 @@ class HomeViewModel: HomeViewModelProtocol, ObservableObject {
     
     func removeFromFavorite(product: Product) {
         favoriteService.remove(product.id)
-        favoriteProducts.append(product)
+        favoriteProducts.removeAll { $0.id == product.id }
     }
 }

@@ -38,11 +38,13 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
     
     func removeProduct(_ productId: Int) {
         cartService.remove(productId)
+        loadCartProducts(allProducts: products)
         calculateTotalSum()
     }
     
     func updateProductQuantity(_ productId: Int, quantity: Int) {
         cartService.editQuantity(productId, quantity)
+        loadCartProducts(allProducts: products)
         calculateTotalSum()
     }
     
@@ -56,7 +58,7 @@ class CartViewModel: CartViewModelProtocol, ObservableObject {
     
     func getQuantity(by id: Int) -> Int {
         let carts = cartService.fetchCart()
-        return carts.first(where: { $0.productId == id })?.quantity ?? 1
+        return carts.first(where: { $0.productId == id })?.quantity ?? 0
     }
     
     func clearCart() {
