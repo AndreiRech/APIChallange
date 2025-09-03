@@ -31,7 +31,7 @@ struct OrderCard: View {
                     Text(product.shippingInformation)
                         .font(.system(.caption, weight: .regular))
                     
-                    Text(product.description)
+                    Text(product.title)
                         .font(.system(.footnote, weight: .regular))
                         .lineLimit(1)
                     
@@ -49,6 +49,10 @@ struct OrderCard: View {
                 .foregroundStyle(Color(.secondarySystemBackground))
         )
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Order: \(product.description), shipping info: \(product.shippingInformation), price: \(product.price.formatted(.currency(code: "USD")))")
+        .accessibilityLabel(
+            "Order: \(product.description), " +
+            "shipping info: \(product.shippingInformation), " +
+            "price: \(product.price.formatted(.currency(code: Locale.current.currency?.identifier ?? "BRL")))"
+        )
     }
 }

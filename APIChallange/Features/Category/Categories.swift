@@ -13,19 +13,17 @@ struct Categories: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 16) {
-                ScrollView(.horizontal) {
-                    HStack(alignment: .center) {
-                        ForEach(viewModel.filteredCategories) { category in
-                            VStack(spacing: 8) {
-                                DefaultImage(imageName: category.imageName)
-                                
-                                Text(category.stringLocalized)
-                                    .font(.subheadline)
-                            }
-                            .frame(width: 84, height: 112)
-                            .onTapGesture {
-                                viewModel.navigateToCategory = category
-                            }
+                HStack(alignment: .center) {
+                    ForEach(viewModel.filteredCategories.prefix(4)) { category in
+                        VStack(spacing: 8) {
+                            DefaultImage(imageName: category.imageName)
+                            
+                            Text(category.stringLocalized)
+                                .font(.subheadline)
+                        }
+                        .frame(width: 84, height: 112)
+                        .onTapGesture {
+                            viewModel.navigateToCategory = category
                         }
                     }
                 }

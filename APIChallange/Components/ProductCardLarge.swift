@@ -75,7 +75,7 @@ struct ProductCardLarge: View {
                 .foregroundStyle(Color(.secondarySystemBackground))
         )
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("\(product.title), price: \(product.price.formatted(.currency(code: "USD")))")
+        .accessibilityLabel("\(product.title), price: \(product.price.formatted(.currency(code: Locale.current.currency?.identifier ?? "BRL")))")
         .accessibilityHint("Touch to see the product details")
         .accessibilityAddTraits(.isButton)
     }

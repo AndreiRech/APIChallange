@@ -44,7 +44,7 @@ struct ProductsList: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .frame(height: 62)
                 .accessibilityElement(children: .combine)
-                .accessibilityLabel("\(product.title), price: \(product.price.formatted(.currency(code: "USD")))")
+                .accessibilityLabel("\(product.title), price: \(product.price.formatted(.currency(code: Locale.current.currency?.identifier ?? "BRL")))")
                 
                 if hasPicker {
                     HStack(spacing: 8) {
